@@ -3,22 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ferma de Pui — Manager comenzi</title>
+<title>Ferma de Pui — Manager</title>
 
 <style>
 *{box-sizing:border-box}
-
 body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:#f5f6f8;
   color:#1d2329
 }
-
-.app{
-  display:flex;
-  min-height:100vh
-}
+.app{display:flex;min-height:100vh}
 
 .side{
   width:235px;
@@ -28,13 +23,11 @@ body{
   position:fixed;
   inset:0 auto 0 0
 }
-
 .brand{
   font-size:20px;
   font-weight:800;
   padding:0 10px 25px
 }
-
 .brand small{
   display:block;
   font-size:12px;
@@ -42,7 +35,6 @@ body{
   opacity:.7;
   margin-top:4px
 }
-
 .nav button{
   display:block;
   width:100%;
@@ -50,15 +42,13 @@ body{
   background:transparent;
   color:#dfe9e3;
   text-align:left;
-  padding:12px 12px;
+  padding:12px;
   border-radius:10px;
   margin:4px 0;
   font-size:15px;
   cursor:pointer
 }
-
-.nav button.active,
-.nav button:hover{
+.nav button.active,.nav button:hover{
   background:#28563f;
   color:#fff
 }
@@ -67,20 +57,15 @@ body{
   margin-left:235px;
   width:calc(100% - 235px);
   padding:25px;
-  max-width:1400px
+  max-width:1450px
 }
-
 .top{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:20px
 }
-
-.top h1{
-  margin:0;
-  font-size:28px
-}
+.top h1{margin:0;font-size:28px}
 
 .btn{
   border:0;
@@ -91,44 +76,34 @@ body{
   font-weight:700;
   cursor:pointer
 }
-
 .btn.secondary{
   background:#e8ece9;
   color:#173b2b
 }
-
-.btn.danger{
-  background:#b43a3a
-}
+.btn.danger{background:#b43a3a}
+.btn.sms{background:#2878b8}
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(5,1fr);
   gap:14px
 }
-
 .card{
   background:white;
   border-radius:14px;
   padding:18px;
   box-shadow:0 2px 10px #00000009
 }
-
 .metric{
   font-size:28px;
   font-weight:800;
   margin-top:8px
 }
-
 .muted{
   color:#6b747c;
   font-size:13px
 }
-
-.section{
-  margin-top:20px
-}
-
+.section{margin-top:20px}
 .section h2{
   font-size:18px;
   margin:0 0 12px
@@ -140,21 +115,17 @@ body{
   border-radius:14px;
   box-shadow:0 2px 10px #00000009
 }
-
 .table{
   width:100%;
   border-collapse:collapse;
-  min-width:750px
+  min-width:800px
 }
-
-.table th,
-.table td{
+.table th,.table td{
   padding:12px 14px;
   border-bottom:1px solid #edf0ef;
   text-align:left;
   font-size:14px
 }
-
 .table th{
   background:#fafbfa;
   font-size:12px;
@@ -171,22 +142,19 @@ body{
   font-size:12px;
   font-weight:700
 }
-
 .pill.gray{
   background:#eef0f2;
   color:#606970
 }
-
-.pill.warning{
-  background:#fff1d6;
-  color:#9a6500
+.pill.red{
+  background:#fde5e5;
+  color:#a52c2c
 }
 
 .row-actions{
   display:flex;
   gap:6px
 }
-
 .empty{
   padding:35px;
   text-align:center;
@@ -203,40 +171,30 @@ body{
   padding:15px;
   z-index:10
 }
-
-.modal.show{
-  display:flex
-}
+.modal.show{display:flex}
 
 .modalbox{
   background:#fff;
   border-radius:16px;
-  width:min(720px,100%);
+  width:min(760px,100%);
   max-height:90vh;
   overflow:auto;
   padding:22px
 }
-
-.modalbox h2{
-  margin-top:0
-}
+.modalbox h2{margin-top:0}
 
 .formgrid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px
 }
-
 .field label{
   display:block;
   font-size:12px;
   font-weight:700;
   margin-bottom:5px
 }
-
-.field input,
-.field select,
-.field textarea{
+.field input,.field select,.field textarea{
   width:100%;
   padding:11px;
   border:1px solid #d7dcda;
@@ -249,25 +207,6 @@ body{
   grid-template-columns:repeat(2,1fr);
   gap:10px;
   margin-top:8px
-}
-
-.species-box{
-  background:#f7f9f7;
-  border:1px solid #e1e6e2;
-  border-radius:10px;
-  padding:10px
-}
-
-.available{
-  display:block;
-  margin-top:5px;
-  font-size:12px;
-  color:#1e7042;
-  font-weight:700
-}
-
-.available.zero{
-  color:#b43a3a
 }
 
 .modalfoot{
@@ -283,7 +222,6 @@ body{
   border-radius:9px;
   width:280px
 }
-
 .toolbar{
   display:flex;
   justify-content:space-between;
@@ -301,59 +239,35 @@ body{
   margin-top:14px
 }
 
-.stock-ok{
+.success{
+  background:#e6f3ea;
+  border-left:4px solid #237a4b;
+  padding:12px;
+  border-radius:8px;
+  font-size:13px;
+  margin-top:14px
+}
+
+.error{
+  background:#fde5e5;
+  border-left:4px solid #b43a3a;
+  padding:12px;
+  border-radius:8px;
+  font-size:13px;
+  margin-top:14px
+}
+
+.stock-good{
   color:#1e7042;
   font-weight:700
 }
-
 .stock-low{
   color:#b36b00;
   font-weight:700
 }
-
-.stock-empty{
+.stock-zero{
   color:#b43a3a;
   font-weight:700
-}
-
-.series-card{
-  margin-bottom:14px
-}
-
-.series-card-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:14px
-}
-
-.series-card-title{
-  font-size:17px;
-  font-weight:800
-}
-
-.stock-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px
-}
-
-.stock-item{
-  background:#f7f9f7;
-  border-radius:10px;
-  padding:12px
-}
-
-.stock-item-name{
-  font-size:12px;
-  color:#6b747c;
-  margin-bottom:5px
-}
-
-.stock-item-number{
-  font-size:20px;
-  font-weight:800
 }
 
 .calendar-head{
@@ -362,18 +276,15 @@ body{
   align-items:center;
   margin-bottom:14px
 }
-
 .calendar-title{
   font-size:20px;
   font-weight:800;
   text-transform:capitalize
 }
-
 .calendar-nav{
   display:flex;
   gap:7px
 }
-
 .calendar-nav button{
   border:0;
   border-radius:8px;
@@ -383,18 +294,12 @@ body{
   font-weight:700;
   cursor:pointer
 }
-
-.calendar-nav button:hover{
-  background:#dce5df
-}
-
 .weekdays{
   display:grid;
   grid-template-columns:repeat(7,1fr);
   gap:7px;
   margin-bottom:7px
 }
-
 .weekday{
   text-align:center;
   font-size:12px;
@@ -402,13 +307,11 @@ body{
   color:#6b747c;
   padding:7px
 }
-
 .calendar{
   display:grid;
   grid-template-columns:repeat(7,1fr);
   gap:7px
 }
-
 .day{
   background:white;
   border-radius:10px;
@@ -416,11 +319,7 @@ body{
   min-height:85px;
   box-shadow:0 2px 7px #00000008
 }
-
-.day b{
-  font-size:12px
-}
-
+.day b{font-size:12px}
 .event{
   margin-top:6px;
   background:#e6f3ea;
@@ -429,69 +328,54 @@ body{
   padding:4px;
   font-size:11px
 }
+.hidden{display:none}
 
-.hidden{
-  display:none
+.connection{
+  font-size:12px;
+  padding:6px 9px;
+  border-radius:999px;
+  font-weight:700
+}
+.connection.online{
+  background:#e6f3ea;
+  color:#1e7042
+}
+.connection.offline{
+  background:#fde5e5;
+  color:#a52c2c
 }
 
 @media(max-width:1000px){
-  .stock-grid{
-    grid-template-columns:repeat(3,1fr)
-  }
+  .grid{grid-template-columns:repeat(3,1fr)}
 }
 
 @media(max-width:800px){
-
   .side{
     width:70px;
     padding:15px 8px
   }
-
   .brand{
     font-size:0;
     text-align:center
   }
-
   .brand:before{
     content:"🐔";
     font-size:24px
   }
-
-  .brand small,
-  .nav span{
-    display:none
-  }
-
+  .brand small,.nav span{display:none}
   .main{
     margin-left:70px;
     width:calc(100% - 70px);
     padding:15px
   }
-
-  .grid{
-    grid-template-columns:repeat(2,1fr)
-  }
-
-  .formgrid{
-    grid-template-columns:1fr
-  }
-
-  .species{
-    grid-template-columns:1fr
-  }
-
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .formgrid{grid-template-columns:1fr}
+  .species{grid-template-columns:1fr}
   .toolbar{
     align-items:stretch;
     flex-direction:column
   }
-
-  .search{
-    width:100%
-  }
-
-  .stock-grid{
-    grid-template-columns:repeat(2,1fr)
-  }
+  .search{width:100%}
 }
 </style>
 </head>
@@ -508,32 +392,14 @@ body{
 </div>
 
 <nav class="nav">
-
-<button data-page="dashboard" class="active">
-  🏠 <span>Dashboard</span>
-</button>
-
-<button data-page="series">
-  🐔 <span>Serii</span>
-</button>
-
-<button data-page="orders">
-  📋 <span>Comenzi</span>
-</button>
-
-<button data-page="clients">
-  👥 <span>Clienți</span>
-</button>
-
-<button data-page="calendar">
-  📅 <span>Calendar</span>
-</button>
-
-<button data-page="settings">
-  ⚙️ <span>Setări</span>
-</button>
-
+<button data-page="dashboard" class="active">🏠 <span>Dashboard</span></button>
+<button data-page="series">🐔 <span>Serii</span></button>
+<button data-page="orders">📋 <span>Comenzi</span></button>
+<button data-page="clients">👥 <span>Clienți</span></button>
+<button data-page="calendar">📅 <span>Calendar</span></button>
+<button data-page="settings">⚙️ <span>Setări</span></button>
 </nav>
+
 </aside>
 
 <main class="main">
@@ -543,21 +409,30 @@ body{
 <section id="dashboard" class="page">
 
 <div class="top">
-  <h1>Dashboard</h1>
-  <button class="btn" onclick="openOrder()">+ Comandă nouă</button>
+<h1>Dashboard</h1>
+
+<div style="display:flex;gap:10px;align-items:center">
+<span id="serverStatus" class="connection offline">
+Server SMS...
+</span>
+
+<button class="btn" onclick="openOrder()">
++ Comandă nouă
+</button>
 </div>
 
-<div class="section">
-  <h2>Pui disponibili pe serii</h2>
-  <div id="seriesAvailability"></div>
+</div>
+
+<div class="grid" id="metrics"></div>
+
+<div class="section card">
+<h2>Următoarele ridicări</h2>
+<div id="upcoming"></div>
 </div>
 
 <div class="section card">
-
-<h2>Următoarele ridicări</h2>
-
-<div id="upcoming"></div>
-
+<h2>Stoc disponibil pe serii</h2>
+<div id="seriesSummary"></div>
 </div>
 
 </section>
@@ -568,13 +443,8 @@ body{
 <section id="series" class="page hidden">
 
 <div class="top">
-
 <h1>Serii</h1>
-
-<button class="btn" onclick="openSeries()">
-  + Serie nouă
-</button>
-
+<button class="btn" onclick="openSeries()">+ Serie nouă</button>
 </div>
 
 <div class="tablewrap">
@@ -582,29 +452,16 @@ body{
 <table class="table">
 
 <thead>
-
 <tr>
 <th>Serie</th>
 <th>Data</th>
-
-<th>Albi</th>
-<th>Albi disponibili</th>
-
-<th>Roșii</th>
-<th>Roșii disponibili</th>
-
+<th>Pui albi</th>
+<th>Pui roșii</th>
 <th>Curcani</th>
-<th>Curcani disponibili</th>
-
 <th>Rațe</th>
-<th>Rațe disponibile</th>
-
 <th>Bibilici</th>
-<th>Bibilici disponibile</th>
-
 <th></th>
 </tr>
-
 </thead>
 
 <tbody id="seriesTable"></tbody>
@@ -621,32 +478,25 @@ body{
 <section id="orders" class="page hidden">
 
 <div class="top">
-
 <h1>Comenzi</h1>
-
-<button class="btn" onclick="openOrder()">
-  + Comandă nouă
-</button>
-
+<button class="btn" onclick="openOrder()">+ Comandă nouă</button>
 </div>
 
 <div class="toolbar">
 
 <input
-  class="search"
-  id="orderSearch"
-  placeholder="Caută după nume sau telefon"
-  oninput="renderOrders()"
+class="search"
+id="orderSearch"
+placeholder="Caută după nume sau telefon"
+oninput="renderOrders()"
 >
 
 <select
-  id="orderFilter"
-  onchange="renderOrders()"
-  class="search"
+id="orderFilter"
+onchange="renderOrders()"
+class="search"
 >
-
 <option value="">Toate seriile</option>
-
 </select>
 
 </div>
@@ -656,7 +506,6 @@ body{
 <table class="table">
 
 <thead>
-
 <tr>
 <th>Client</th>
 <th>Telefon</th>
@@ -666,7 +515,6 @@ body{
 <th>Status</th>
 <th></th>
 </tr>
-
 </thead>
 
 <tbody id="ordersTable"></tbody>
@@ -683,13 +531,8 @@ body{
 <section id="clients" class="page hidden">
 
 <div class="top">
-
 <h1>Clienți</h1>
-
-<button class="btn" onclick="openOrder()">
-  + Client / comandă
-</button>
-
+<button class="btn" onclick="openOrder()">+ Client / comandă</button>
 </div>
 
 <div class="tablewrap">
@@ -697,14 +540,12 @@ body{
 <table class="table">
 
 <thead>
-
 <tr>
 <th>Nume</th>
 <th>Telefon</th>
 <th>Comenzi</th>
 <th>Ultima ridicare</th>
 </tr>
-
 </thead>
 
 <tbody id="clientsTable"></tbody>
@@ -729,7 +570,6 @@ body{
 <div id="calendarHead" class="calendar-head"></div>
 
 <div class="weekdays">
-
 <div class="weekday">Lun</div>
 <div class="weekday">Mar</div>
 <div class="weekday">Mie</div>
@@ -737,7 +577,6 @@ body{
 <div class="weekday">Vin</div>
 <div class="weekday">Sâm</div>
 <div class="weekday">Dum</div>
-
 </div>
 
 <div id="calendarGrid" class="calendar"></div>
@@ -757,12 +596,15 @@ body{
 
 <div class="card">
 
-<h2>Mesaje automate</h2>
+<h2>SMS</h2>
 
 <p class="muted">
-În prima versiune poți configura textul.
-Trimiterea SMS reală este conectată prin server.
+Server SMS: <b>192.168.68.111:3000</b>
 </p>
+
+<div id="settingsServerStatus"></div>
+
+<br>
 
 <div class="field">
 
@@ -772,7 +614,7 @@ Mesaj reminder cu 1 zi înainte
 
 <textarea
 id="smsText"
-style="width:100%;min-height:110px;padding:11px;border:1px solid #d7dcda;border-radius:9px"
+style="width:100%;min-height:110px"
 >Bună ziua, [NUME]! Vă reamintim că mâine, [DATA], aveți programată ridicarea comenzii: [COMANDA]. Vă așteptăm la fermă!</textarea>
 
 </div>
@@ -786,7 +628,7 @@ Salvează mesajul
 <div class="note">
 
 Pentru SMS automat real, serverul trebuie să fie pornit,
-iar Samsung S10 trebuie să fie conectat la aceeași rețea.
+iar Samsung S10 trebuie să fie conectat la aceeași rețea Wi-Fi.
 
 </div>
 
@@ -799,206 +641,191 @@ iar Samsung S10 trebuie să fie conectat la aceeași rețea.
 
 
 <div id="modal" class="modal">
-
 <div class="modalbox" id="modalContent"></div>
-
 </div>
 
 
 <script>
 
-const key="ferma_pui_v1";
+/* =========================================================
+   CONFIGURARE SERVER SMS
+========================================================= */
 
-let db=JSON.parse(localStorage.getItem(key)||'null')||{
+const SMS_SERVER = "http://192.168.68.111:3000";
 
-species:[
-  "Pui albi",
-  "Pui roșii",
-  "Curcani",
-  "Rațe",
-  "Bibilici"
-],
 
-series:[],
+/* =========================================================
+   BAZA DE DATE LOCALA
+========================================================= */
 
-orders:[],
+const key = "ferma_pui_v2";
 
-sms:
-"Bună ziua, [NUME]! Vă reamintim că mâine, [DATA], aveți programată ridicarea comenzii: [COMANDA]. Vă așteptăm la fermă!"
+let db =
+JSON.parse(localStorage.getItem(key) || "null") ||
+{
+  species:[
+    "Pui albi",
+    "Pui roșii",
+    "Curcani",
+    "Rațe",
+    "Bibilici"
+  ],
 
+  series:[],
+
+  orders:[],
+
+  sms:
+  "Bună ziua, [NUME]! Vă reamintim că mâine, [DATA], aveți programată ridicarea comenzii: [COMANDA]. Vă așteptăm la fermă!"
 };
 
 
+/* =========================================================
+   FUNCTII GENERALE
+========================================================= */
+
 function save(){
-
-  localStorage.setItem(
-    key,
-    JSON.stringify(db)
-  );
-
+  localStorage.setItem(key,JSON.stringify(db));
 }
-
 
 function esc(s){
-
-  return String(s??"").replace(
-    /[&<>"']/g,
-    m=>({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-    }[m])
-  );
-
+  return String(s ?? "")
+  .replace(/[&<>"']/g,m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
 }
-
 
 function fmt(d){
-
   if(!d)return "-";
 
-  return new Date(
-    d+"T12:00:00"
-  ).toLocaleDateString(
-    "ro-RO",
-    {
-      day:"2-digit",
-      month:"2-digit",
-      year:"numeric"
-    }
-  );
-
+  return new Date(d+"T12:00:00")
+  .toLocaleDateString("ro-RO",{
+    day:"2-digit",
+    month:"2-digit",
+    year:"numeric"
+  });
 }
-
 
 function orderText(o){
 
   return db.species
-    .map(
-      s=>o.qty[s]
-      ? `${o.qty[s]} ${s.toLowerCase()}`
-      :""
-    )
-    .filter(Boolean)
-    .join(", ");
-
+  .map(s =>
+    o.qty[s]
+    ? `${o.qty[s]} ${s.toLowerCase()}`
+    : ""
+  )
+  .filter(Boolean)
+  .join(", ");
 }
-
-
-/* =========================
-   CALCUL DISPONIBIL
-========================= */
-
-function getSeriesOrdered(seriesId, species){
-
-  return db.orders.reduce(
-    (total,o)=>{
-
-      if(
-        o.seriesId===seriesId &&
-        o.qty &&
-        o.qty[species]
-      ){
-
-        total += Number(o.qty[species]) || 0;
-
-      }
-
-      return total;
-
-    },
-    0
-  );
-
-}
-
-
-function getAvailable(seriesId, species){
-
-  const sr=db.series.find(
-    x=>x.id===seriesId
-  );
-
-  if(!sr)return 0;
-
-  const stock=Number(
-    sr.stock[species] || 0
-  );
-
-  const ordered=getSeriesOrdered(
-    seriesId,
-    species
-  );
-
-  return Math.max(
-    0,
-    stock-ordered
-  );
-
-}
-
-
-function stockClass(value){
-
-  if(value<=0)return "stock-empty";
-
-  if(value<10)return "stock-low";
-
-  return "stock-ok";
-
-}
-
-
-/* =========================
-   NAVIGARE
-========================= */
 
 function nav(page){
 
   document
-    .querySelectorAll(".page")
-    .forEach(
-      x=>x.classList.add("hidden")
-    );
+  .querySelectorAll(".page")
+  .forEach(x=>x.classList.add("hidden"));
 
   document
-    .getElementById(page)
-    .classList.remove("hidden");
+  .getElementById(page)
+  .classList.remove("hidden");
 
   document
-    .querySelectorAll(".nav button")
-    .forEach(
-      x=>x.classList.toggle(
-        "active",
-        x.dataset.page===page
-      )
-    );
-
-  render();
-
-}
-
-
-document
   .querySelectorAll(".nav button")
-  .forEach(
-    b=>b.onclick=()=>nav(
-      b.dataset.page
+  .forEach(x =>
+    x.classList.toggle(
+      "active",
+      x.dataset.page === page
     )
   );
 
+  render();
+}
 
-/* =========================
+document
+.querySelectorAll(".nav button")
+.forEach(b =>
+  b.onclick=()=>nav(b.dataset.page)
+);
+
+
+/* =========================================================
+   SERVER SMS
+========================================================= */
+
+async function checkSmsServer(){
+
+  const badge =
+    document.getElementById("serverStatus");
+
+  const settings =
+    document.getElementById("settingsServerStatus");
+
+  try{
+
+    const response =
+      await fetch(
+        SMS_SERVER,
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
+
+    if(response.ok){
+
+      if(badge){
+        badge.textContent="SMS Server ONLINE";
+        badge.className="connection online";
+      }
+
+      if(settings){
+        settings.innerHTML=
+        `<div class="success">
+          ✅ Serverul SMS este online la
+          <b>${SMS_SERVER}</b>
+        </div>`;
+      }
+
+      return true;
+    }
+
+    throw new Error("Server indisponibil");
+
+  }catch(error){
+
+    if(badge){
+      badge.textContent="SMS Server OFFLINE";
+      badge.className="connection offline";
+    }
+
+    if(settings){
+      settings.innerHTML=
+      `<div class="error">
+        ❌ Serverul SMS nu poate fi accesat.
+        <br><br>
+        Verifică dacă serverul este pornit și dacă dispozitivul este pe aceeași rețea Wi-Fi cu laptopul.
+      </div>`;
+    }
+
+    return false;
+  }
+}
+
+
+/* =========================================================
    RENDER
-========================= */
+========================================================= */
 
 function render(){
 
-  document.getElementById(
-    "smsText"
-  ).value=db.sms;
+  const sms =
+    document.getElementById("smsText");
+
+  if(sms)
+    sms.value=db.sms;
 
   renderDashboard();
   renderSeries();
@@ -1006,126 +833,58 @@ function render(){
   renderClients();
   renderCalendar();
 
+  checkSmsServer();
 }
 
 
-/* =========================
+/* =========================================================
    DASHBOARD
-========================= */
+========================================================= */
 
 function renderDashboard(){
 
-  const container=
-    document.getElementById(
-      "seriesAvailability"
-    );
+  const totals={};
+
+  db.species.forEach(s=>{
+
+    totals[s]=
+      db.orders.reduce(
+        (a,o)=>a+(+o.qty[s]||0),
+        0
+      );
+
+  });
+
+  document.getElementById("metrics").innerHTML=
+  db.species
+  .map(s=>`
+
+    <div class="card">
+
+      <div class="muted">
+        ${esc(s)}
+      </div>
+
+      <div class="metric">
+        ${totals[s].toLocaleString("ro-RO")}
+      </div>
+
+      <div class="muted">
+        în comenzi
+      </div>
+
+    </div>
+
+  `).join("");
 
 
-  if(!db.series.length){
-
-    container.innerHTML=
-      `<div class="card">
-        <div class="empty">
-          Nu există serii.
-          Adaugă prima serie pentru a vedea
-          disponibilitatea.
-        </div>
-      </div>`;
-
-  }else{
-
-    container.innerHTML=
-      db.series.map(sr=>{
-
-        return `
-        <div class="card series-card">
-
-          <div class="series-card-header">
-
-            <div>
-
-              <div class="series-card-title">
-                ${esc(sr.name)}
-              </div>
-
-              <div class="muted">
-                Data seriei: ${fmt(sr.date)}
-              </div>
-
-            </div>
-
-            <button
-              class="btn secondary"
-              onclick="openOrderForSeries('${sr.id}')"
-            >
-              + Comandă
-            </button>
-
-          </div>
-
-
-          <div class="stock-grid">
-
-            ${db.species.map(s=>{
-
-              const available=
-                getAvailable(
-                  sr.id,
-                  s
-                );
-
-              return `
-
-              <div class="stock-item">
-
-                <div class="stock-item-name">
-                  ${esc(s)}
-                </div>
-
-                <div class="stock-item-number ${stockClass(available)}">
-                  ${available.toLocaleString("ro-RO")}
-                </div>
-
-                <div class="muted">
-                  disponibili
-                </div>
-
-              </div>
-
-              `;
-
-            }).join("")}
-
-          </div>
-
-        </div>
-        `;
-
-      }).join("");
-
-  }
-
-
-  /* RIDICARI */
-
-  let arr=[
-    ...db.orders
-  ]
-  .filter(
-    o=>o.status!=="Ridicată"
-  )
-  .sort(
-    (a,b)=>
-      a.pickup.localeCompare(
-        b.pickup
-      )
-  )
+  let arr=[...db.orders]
+  .filter(o=>o.status!=="Ridicată")
+  .sort((a,b)=>a.pickup.localeCompare(b.pickup))
   .slice(0,8);
 
 
-  document.getElementById(
-    "upcoming"
-  ).innerHTML=
+  document.getElementById("upcoming").innerHTML=
 
   arr.length
 
@@ -1140,29 +899,18 @@ function renderDashboard(){
       <th>Comandă</th>
     </tr>
 
-    ${arr.map(o=>`
+    ${
+      arr.map(o=>`
 
-      <tr>
+        <tr>
+          <td>${esc(o.name)}</td>
+          <td>${fmt(o.pickup)}</td>
+          <td>${esc(o.series)}</td>
+          <td>${esc(orderText(o))}</td>
+        </tr>
 
-        <td>
-          ${esc(o.name)}
-        </td>
-
-        <td>
-          ${fmt(o.pickup)}
-        </td>
-
-        <td>
-          ${esc(o.series)}
-        </td>
-
-        <td>
-          ${esc(orderText(o))}
-        </td>
-
-      </tr>
-
-    `).join("")}
+      `).join("")
+    }
 
   </table>`
 
@@ -1170,253 +918,188 @@ function renderDashboard(){
 
   "<div class='empty'>Nu există ridicări viitoare.</div>";
 
+
+  renderSeriesSummary();
 }
 
 
-/* =========================
-   SERII
-========================= */
+/* =========================================================
+   STOC PE SERIE
+========================================================= */
 
-function renderSeries(){
+function getSeriesSold(sr,species){
 
-  const tbody=
-    document.getElementById(
-      "seriesTable"
-    );
+  return db.orders
+  .filter(o=>o.seriesId===sr.id)
+  .filter(o=>o.status!=="Anulată")
+  .reduce(
+    (total,o)=>
+      total+(+o.qty[species]||0),
+    0
+  );
+}
 
+
+function getSeriesAvailable(sr,species){
+
+  const stock =
+    +sr.stock[species] || 0;
+
+  const sold =
+    getSeriesSold(sr,species);
+
+  return Math.max(0,stock-sold);
+}
+
+
+function stockHtml(available){
+
+  if(available<=0){
+
+    return `<span class="stock-zero">0</span>`;
+
+  }
+
+  if(available<=10){
+
+    return `<span class="stock-low">${available}</span>`;
+
+  }
+
+  return `<span class="stock-good">${available}</span>`;
+}
+
+
+function renderSeriesSummary(){
+
+  const container =
+    document.getElementById("seriesSummary");
 
   if(!db.series.length){
 
-    tbody.innerHTML=
-      "<tr><td colspan='13' class='empty'>Nu există serii.</td></tr>";
+    container.innerHTML=
+    "<div class='empty'>Adaugă prima serie.</div>";
 
     return;
-
   }
 
 
-  tbody.innerHTML=
-    db.series.map(sr=>{
+  container.innerHTML=
 
-      return `
+  `<table class="table">
 
-      <tr>
+    <tr>
 
-        <td>
-          <b>${esc(sr.name)}</b>
-        </td>
+      <th>Serie</th>
+      <th>Data</th>
 
-        <td>
-          ${fmt(sr.date)}
-        </td>
+      ${
+        db.species
+        .map(s=>`<th>${esc(s)}</th>`)
+        .join("")
+      }
 
+    </tr>
 
-        ${db.species.map(s=>`
+    ${
+      db.series.map(sr=>`
+
+        <tr>
 
           <td>
-            ${Number(sr.stock[s]||0)}
+            <b>${esc(sr.name)}</b>
           </td>
 
-          <td class="${stockClass(
-            getAvailable(sr.id,s)
-          )}">
+          <td>${fmt(sr.date)}</td>
 
-            ${getAvailable(
-              sr.id,
-              s
-            )}
+          ${
+            db.species.map(s=>{
 
-          </td>
+              const stock =
+                +sr.stock[s]||0;
 
-        `).join("")}
+              const sold =
+                getSeriesSold(sr,s);
 
+              const available =
+                getSeriesAvailable(sr,s);
 
-        <td>
+              return `
 
-          <button
-            class="btn danger"
-            onclick="delSeries('${sr.id}')"
-          >
-            Șterge
-          </button>
+                <td>
 
-        </td>
+                  ${stockHtml(available)}
 
-      </tr>
+                  <div class="muted">
+                    ${sold} comandate / ${stock} total
+                  </div>
 
-      `;
+                </td>
 
-    }).join("");
+              `;
 
+            }).join("")
+          }
+
+        </tr>
+
+      `).join("")
+    }
+
+  </table>`;
 }
 
 
-/* =========================
-   STERGERE SERIE
-========================= */
+/* =========================================================
+   SERII
+========================================================= */
 
-function delSeries(id){
+function renderSeries(){
 
-  let sr=db.series.find(
-    x=>x.id===id
-  );
+  const tbody =
+    document.getElementById("seriesTable");
 
-  if(!sr)return;
+  tbody.innerHTML=
 
-
-  let linkedOrders=
-    db.orders.filter(
-      o=>o.seriesId===id
-    );
-
-
-  let msg=linkedOrders.length
-
-    ?
-
-    `Seria „${sr.name}” are ${linkedOrders.length} comand${linkedOrders.length===1?"ă":"i"} asociat${linkedOrders.length===1?"ă":"e"}.
-
-Dacă ștergi seria, comenzile asociate vor fi șterse și ele.
-
-Continui?`
-
-    :
-
-    `Ștergi seria „${sr.name}”?`;
-
-
-  if(confirm(msg)){
-
-    db.orders=
-      db.orders.filter(
-        o=>o.seriesId!==id
-      );
-
-    db.series=
-      db.series.filter(
-        x=>x.id!==id
-      );
-
-    save();
-
-    render();
-
-  }
-
-}
-
-
-/* =========================
-   COMENZI
-========================= */
-
-function renderOrders(){
-
-  let sel=
-    document.getElementById(
-      "orderFilter"
-    );
-
-  let old=sel.value;
-
-
-  sel.innerHTML=
-    '<option value="">Toate seriile</option>'+
-    db.series.map(
-      s=>`
-        <option value="${s.id}">
-          ${esc(s.name)}
-        </option>
-      `
-    ).join("");
-
-
-  sel.value=old;
-
-
-  let q=
-    (
-      document.getElementById(
-        "orderSearch"
-      )?.value||""
-    ).toLowerCase();
-
-
-  let f=sel.value;
-
-
-  let arr=
-    db.orders.filter(
-      o=>
-        (!f||o.seriesId===f)&&
-        (
-          `${o.name} ${o.phone}`
-        )
-        .toLowerCase()
-        .includes(q)
-    );
-
-
-  document.getElementById(
-    "ordersTable"
-  ).innerHTML=
-
-  arr.length
+  db.series.length
 
   ?
 
-  arr.map(o=>`
+  db.series.map(sr=>`
 
     <tr>
 
       <td>
-        <b>${esc(o.name)}</b>
+        <b>${esc(sr.name)}</b>
       </td>
+
+      <td>${fmt(sr.date)}</td>
+
+      ${
+        db.species.map(s=>`
+
+          <td>
+
+            ${stockHtml(
+              getSeriesAvailable(sr,s)
+            )}
+
+            <div class="muted">
+              ${getSeriesSold(sr,s)} / ${sr.stock[s]||0}
+            </div>
+
+          </td>
+
+        `).join("")
+      }
 
       <td>
-        ${esc(o.phone)}
-      </td>
-
-      <td>
-        ${esc(o.series)}
-      </td>
-
-      <td>
-        ${fmt(o.pickup)}
-      </td>
-
-      <td>
-        ${esc(orderText(o))}
-      </td>
-
-      <td>
-
-        <span class="pill ${
-          o.status==="Ridicată"
-          ?"gray"
-          :""
-        }">
-
-          ${o.status}
-
-        </span>
-
-      </td>
-
-      <td class="row-actions">
-
-        <button
-          class="btn secondary"
-          onclick="reminder('${o.id}')"
-        >
-          SMS
-        </button>
 
         <button
           class="btn danger"
-          onclick="delOrder('${o.id}')"
+          onclick="delSeries('${sr.id}')"
         >
-          ×
+          Șterge
         </button>
 
       </td>
@@ -1427,267 +1110,22 @@ function renderOrders(){
 
   :
 
-  "<tr><td colspan='7' class='empty'>Nu există comenzi.</td></tr>";
-
+  "<tr><td colspan='8' class='empty'>Nu există serii.</td></tr>";
 }
 
 
-/* =========================
-   CLIENTI
-========================= */
-
-function renderClients(){
-
-  let map={};
-
-
-  db.orders.forEach(o=>{
-
-    map[o.phone]??={
-      name:o.name,
-      phone:o.phone,
-      count:0,
-      last:""
-    };
-
-
-    map[o.phone].count++;
-
-
-    map[o.phone].last=
-      Math.max(
-        map[o.phone].last
-          ? new Date(map[o.phone].last)
-          : 0,
-        new Date(o.pickup)
-      );
-
-  });
-
-
-  document.getElementById(
-    "clientsTable"
-  ).innerHTML=
-
-  Object.values(map).length
-
-  ?
-
-  Object.values(map).map(c=>`
-
-    <tr>
-
-      <td>
-        <b>${esc(c.name)}</b>
-      </td>
-
-      <td>
-        ${esc(c.phone)}
-      </td>
-
-      <td>
-        ${c.count}
-      </td>
-
-      <td>
-        ${
-          c.last
-          ? new Date(c.last)
-              .toLocaleDateString("ro-RO")
-          : "-"
-        }
-      </td>
-
-    </tr>
-
-  `).join("")
-
-  :
-
-  "<tr><td colspan='4' class='empty'>Nu există clienți.</td></tr>";
-
-}
-
-
-/* =========================
-   CALENDAR
-========================= */
-
-let calendarDate=
-  new Date(2027,0,1);
-
-
-function changeCalendarMonth(delta){
-
-  calendarDate.setMonth(
-    calendarDate.getMonth()+delta
-  );
-
-  renderCalendar();
-
-}
-
-
-function renderCalendar(){
-
-  let year=
-    calendarDate.getFullYear();
-
-  let month=
-    calendarDate.getMonth();
-
-
-  let start=
-    new Date(
-      year,
-      month,
-      1
-    );
-
-
-  let end=
-    new Date(
-      year,
-      month+1,
-      0
-    );
-
-
-  let monthName=
-    start.toLocaleDateString(
-      "ro-RO",
-      {
-        month:"long",
-        year:"numeric"
-      }
-    );
-
-
-  document.getElementById(
-    "calendarHead"
-  ).innerHTML=
-
-  `
-
-  <div class="calendar-title">
-    ${monthName}
-  </div>
-
-  <div class="calendar-nav">
-
-    <button
-      onclick="changeCalendarMonth(-1)"
-    >
-      ‹ Luna anterioară
-    </button>
-
-    <button
-      onclick="calendarDate=new Date();renderCalendar()"
-    >
-      Astăzi
-    </button>
-
-    <button
-      onclick="changeCalendarMonth(1)"
-    >
-      Luna următoare ›
-    </button>
-
-  </div>
-
-  `;
-
-
-  let firstDay=
-    (start.getDay()+6)%7;
-
-
-  let cells=[];
-
-
-  for(
-    let i=0;
-    i<firstDay;
-    i++
-  ){
-
-    cells.push("<div></div>");
-
-  }
-
-
-  for(
-    let d=1;
-    d<=end.getDate();
-    d++
-  ){
-
-    let iso=
-      `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-
-
-    let os=
-      db.orders.filter(
-        o=>o.pickup===iso
-      );
-
-
-    cells.push(`
-
-      <div class="day">
-
-        <b>${d}</b>
-
-        ${os.slice(0,3).map(o=>`
-
-          <div class="event">
-
-            ${esc(o.name)}
-            —
-            ${esc(orderText(o))}
-
-          </div>
-
-        `).join("")}
-
-
-        ${
-          os.length>3
-          ? `<div class="muted">
-              +${os.length-3} comenzi
-             </div>`
-          :""
-        }
-
-      </div>
-
-    `);
-
-  }
-
-
-  document.getElementById(
-    "calendarGrid"
-  ).innerHTML=
-    cells.join("");
-
-}
-
-
-/* =========================
-   SERIE NOUA
-========================= */
+/* =========================================================
+   ADAUGARE SERIE
+========================================================= */
 
 function openSeries(){
 
-  let fields=
+  const fields =
     db.species.map(s=>`
 
       <div class="field">
 
-        <label>
-          ${esc(s)}
-        </label>
+        <label>${esc(s)}</label>
 
         <input
           type="number"
@@ -1709,9 +1147,7 @@ function openSeries(){
 
       <div class="field">
 
-        <label>
-          Nume serie
-        </label>
+        <label>Nume serie</label>
 
         <input
           id="sr_name"
@@ -1720,12 +1156,9 @@ function openSeries(){
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Data seriei
-        </label>
+        <label>Data seriei</label>
 
         <input
           type="date"
@@ -1736,18 +1169,11 @@ function openSeries(){
 
     </div>
 
-
-    <h3>
-      Număr disponibil inițial
-    </h3>
-
+    <h3>Număr disponibil inițial</h3>
 
     <div class="species">
-
       ${fields}
-
     </div>
-
 
     <div class="modalfoot">
 
@@ -1768,28 +1194,32 @@ function openSeries(){
     </div>
 
   `);
-
 }
 
 
 function addSeries(){
 
-  let sr={
+  const name =
+    document.getElementById("sr_name")
+    .value.trim() || "Serie nouă";
 
+  const date =
+    document.getElementById("sr_date")
+    .value;
+
+  if(!date){
+
+    alert("Alege data seriei.");
+
+    return;
+  }
+
+
+  const sr={
     id:crypto.randomUUID(),
-
-    name:
-      document.getElementById(
-        "sr_name"
-      ).value||"Serie nouă",
-
-    date:
-      document.getElementById(
-        "sr_date"
-      ).value,
-
+    name,
+    date,
     stock:{}
-
   };
 
 
@@ -1798,18 +1228,9 @@ function addSeries(){
     sr.stock[s]=
       +document.getElementById(
         "st_"+s
-      ).value||0;
+      ).value || 0;
 
   });
-
-
-  if(!sr.date){
-
-    return alert(
-      "Alege data seriei."
-    );
-
-  }
 
 
   db.series.push(sr);
@@ -1819,70 +1240,216 @@ function addSeries(){
   closeModal();
 
   render();
-
 }
 
 
-/* =========================
-   COMANDA NOUA
-========================= */
+/* =========================================================
+   STERGERE SERIE
+========================================================= */
+
+function delSeries(id){
+
+  const sr =
+    db.series.find(x=>x.id===id);
+
+  if(!sr)return;
+
+
+  const linkedOrders =
+    db.orders.filter(
+      o=>o.seriesId===id
+    );
+
+
+  let msg =
+    linkedOrders.length
+
+    ?
+
+    `Seria „${sr.name}” are ${linkedOrders.length} comand${linkedOrders.length===1?"ă":"i"} asociat${linkedOrders.length===1?"ă":"e"}.
+
+Dacă ștergi seria, comenzile asociate vor fi șterse și ele.
+
+Continui?`
+
+    :
+
+    `Ștergi seria „${sr.name}”?`;
+
+
+  if(confirm(msg)){
+
+    db.orders =
+      db.orders.filter(
+        o=>o.seriesId!==id
+      );
+
+    db.series =
+      db.series.filter(
+        x=>x.id!==id
+      );
+
+    save();
+
+    render();
+  }
+}
+
+
+/* =========================================================
+   COMENZI
+========================================================= */
+
+function renderOrders(){
+
+  const sel =
+    document.getElementById("orderFilter");
+
+  if(!sel)return;
+
+  const old=sel.value;
+
+
+  sel.innerHTML=
+    '<option value="">Toate seriile</option>'+
+    db.series.map(s=>`
+
+      <option value="${s.id}">
+        ${esc(s.name)}
+      </option>
+
+    `).join("");
+
+
+  sel.value=old;
+
+
+  const q =
+    (
+      document.getElementById(
+        "orderSearch"
+      )?.value || ""
+    ).toLowerCase();
+
+
+  const f=sel.value;
+
+
+  const arr =
+    db.orders.filter(o=>
+
+      (!f || o.seriesId===f)
+
+      &&
+
+      (`${o.name} ${o.phone}`
+        .toLowerCase()
+        .includes(q))
+
+    );
+
+
+  document.getElementById(
+    "ordersTable"
+  ).innerHTML=
+
+  arr.length
+
+  ?
+
+  arr.map(o=>`
+
+    <tr>
+
+      <td>
+        <b>${esc(o.name)}</b>
+      </td>
+
+      <td>${esc(o.phone)}</td>
+
+      <td>${esc(o.series)}</td>
+
+      <td>${fmt(o.pickup)}</td>
+
+      <td>${esc(orderText(o))}</td>
+
+      <td>
+
+        <span class="pill ${
+          o.status==="Ridicată"
+          ?"gray"
+          :""
+        }">
+
+          ${esc(o.status)}
+
+        </span>
+
+      </td>
+
+      <td class="row-actions">
+
+        <button
+          class="btn sms"
+          onclick="sendRealSms('${o.id}')"
+        >
+          SMS
+        </button>
+
+        <button
+          class="btn danger"
+          onclick="delOrder('${o.id}')"
+        >
+          ×
+        </button>
+
+      </td>
+
+    </tr>
+
+  `).join("")
+
+  :
+
+  "<tr><td colspan='7' class='empty'>Nu există comenzi.</td></tr>";
+}
+
+
+/* =========================================================
+   ADAUGARE COMANDA
+========================================================= */
 
 function openOrder(){
 
   if(!db.series.length){
 
-    return alert(
-      "Adaugă mai întâi o serie."
-    );
+    alert("Adaugă mai întâi o serie.");
 
+    return;
   }
 
 
-  openOrderForSeries(
-    db.series[0].id
-  );
-
-}
-
-
-function openOrderForSeries(seriesId){
-
-  if(!db.series.length){
-
-    return alert(
-      "Adaugă mai întâi o serie."
-    );
-
-  }
-
-
-  let fields=
+  const fields =
     db.species.map(s=>`
 
-      <div class="species-box">
+      <div class="field">
 
-        <div class="field">
+        <label>
+          ${esc(s)}
+        </label>
 
-          <label>
-            ${esc(s)}
-          </label>
+        <input
+          type="number"
+          min="0"
+          id="q_${esc(s)}"
+          value="0"
+        >
 
-          <input
-            type="number"
-            min="0"
-            id="q_${esc(s)}"
-            value="0"
-            oninput="checkOrderQuantity('${esc(s)}')"
-          >
-
-          <span
-            id="available_${esc(s)}"
-            class="available"
-          >
-            Disponibili: 0
-          </span>
-
-        </div>
+        <div
+          id="available_${esc(s)}"
+          class="muted"
+          style="margin-top:4px"
+        ></div>
 
       </div>
 
@@ -1891,18 +1458,13 @@ function openOrderForSeries(seriesId){
 
   show(`
 
-    <h2>
-      Comandă nouă
-    </h2>
-
+    <h2>Comandă nouă</h2>
 
     <div class="formgrid">
 
       <div class="field">
 
-        <label>
-          Nume client
-        </label>
+        <label>Nume client</label>
 
         <input
           id="o_name"
@@ -1911,12 +1473,9 @@ function openOrderForSeries(seriesId){
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Telefon
-        </label>
+        <label>Telefon</label>
 
         <input
           id="o_phone"
@@ -1926,43 +1485,32 @@ function openOrderForSeries(seriesId){
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Serie
-        </label>
+        <label>Serie</label>
 
         <select
           id="o_series"
-          onchange="syncPickup()"
+          onchange="syncPickup();updateAvailable()"
         >
 
-          ${db.series.map(s=>`
+          ${
+            db.series.map(s=>`
 
-            <option
-              value="${s.id}"
-              ${s.id===seriesId?"selected":""}
-            >
+              <option value="${s.id}">
+                ${esc(s.name)} — ${fmt(s.date)}
+              </option>
 
-              ${esc(s.name)}
-              —
-              ${fmt(s.date)}
-
-            </option>
-
-          `).join("")}
+            `).join("")
+          }
 
         </select>
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Data ridicării
-        </label>
+        <label>Data ridicării</label>
 
         <input
           id="o_pickup"
@@ -1974,31 +1522,17 @@ function openOrderForSeries(seriesId){
     </div>
 
 
-    <h3>
-      Cantități
-    </h3>
-
+    <h3>Cantități</h3>
 
     <div class="species">
-
       ${fields}
-
-    </div>
-
-
-    <div class="note">
-
-      Disponibilitatea este calculată
-      separat pentru seria selectată.
-      Nu poți comanda mai mult decât
-      stocul disponibil.
-
     </div>
 
 
     <div
-      id="orderError"
-      style="display:none;margin-top:12px;color:#b43a3a;font-weight:700"
+      id="orderWarning"
+      class="error"
+      style="display:none"
     ></div>
 
 
@@ -2023,182 +1557,192 @@ function openOrderForSeries(seriesId){
   `);
 
 
+  db.species.forEach(s=>{
+
+    document
+    .getElementById("q_"+s)
+    .addEventListener(
+      "input",
+      updateAvailable
+    );
+
+  });
+
+
   syncPickup();
 
+  updateAvailable();
 }
 
 
-/* =========================
-   ACTUALIZARE DISPONIBIL
-========================= */
+/* =========================================================
+   AFISARE DISPONIBIL
+========================================================= */
 
-function syncPickup(){
+function updateAvailable(){
 
-  let select=
+  const sid =
     document.getElementById(
       "o_series"
-    );
+    )?.value;
+
+  if(!sid)return;
 
 
-  if(!select)return;
-
-
-  let s=
+  const sr =
     db.series.find(
-      x=>x.id===select.value
+      x=>x.id===sid
     );
 
-
-  if(s){
-
-    document.getElementById(
-      "o_pickup"
-    ).value=s.date;
-
-  }
+  if(!sr)return;
 
 
-  updateOrderAvailability();
-
-}
-
-
-function updateOrderAvailability(){
-
-  let select=
-    document.getElementById(
-      "o_series"
-    );
-
-
-  if(!select)return;
-
-
-  let seriesId=
-    select.value;
+  let hasError=false;
 
 
   db.species.forEach(s=>{
 
-    let el=
+    const available =
+      getSeriesAvailable(
+        sr,
+        s
+      );
+
+
+    const input =
+      document.getElementById(
+        "q_"+s
+      );
+
+    const label =
       document.getElementById(
         "available_"+s
       );
 
 
-    if(!el)return;
+    if(label){
+
+      label.innerHTML=
+        `Disponibil în serie: <b>${available}</b>`;
+
+    }
 
 
-    let available=
-      getAvailable(
-        seriesId,
-        s
-      );
+    if(input){
 
+      input.max=available;
 
-    el.textContent=
-      "Disponibili: "+
-      available.toLocaleString(
-        "ro-RO"
-      );
+      const qty =
+        +input.value || 0;
 
+      if(qty>available){
 
-    el.className=
-      "available "+
-      (
-        available<=0
-        ?"zero"
-        :""
-      );
+        hasError=true;
+
+        input.style.borderColor=
+          "#b43a3a";
+
+      }else{
+
+        input.style.borderColor=
+          "";
+
+      }
+
+    }
 
   });
+
+
+  const warning =
+    document.getElementById(
+      "orderWarning"
+    );
+
+
+  if(warning){
+
+    warning.style.display=
+      hasError ? "block" : "none";
+
+    warning.textContent=
+      hasError
+      ? "Cantitatea introdusă depășește stocul disponibil în serie."
+      : "";
+
+  }
 
 }
 
 
-function checkOrderQuantity(species){
+/* =========================================================
+   DATA RIDICARII
+========================================================= */
 
-  let select=
+function syncPickup(){
+
+  const select =
     document.getElementById(
       "o_series"
     );
 
-  let input=
+  const pickup =
     document.getElementById(
-      "q_"+species
+      "o_pickup"
     );
 
-  if(!select||!input)return;
+  if(!select || !pickup)return;
 
 
-  let available=
-    getAvailable(
-      select.value,
-      species
+  const s =
+    db.series.find(
+      x=>x.id===select.value
     );
 
 
-  let value=
-    Number(input.value)||0;
-
-
-  if(value>available){
-
-    input.value=
-      available;
-
-    alert(
-      `Nu sunt suficienți ${species.toLowerCase()} în această serie.\n\nDisponibili: ${available}`
-    );
-
-  }
-
-
-  updateOrderAvailability();
-
+  if(s)
+    pickup.value=s.date;
 }
 
 
-/* =========================
+/* =========================================================
    ADAUGARE COMANDA
-========================= */
+========================================================= */
 
 function addOrder(){
 
-  let name=
+  const name =
     document.getElementById(
       "o_name"
     ).value.trim();
 
-
-  let phone=
+  const phone =
     document.getElementById(
       "o_phone"
     ).value.trim();
 
-
-  let sid=
+  const sid =
     document.getElementById(
       "o_series"
     ).value;
 
-
-  let pick=
+  const pick =
     document.getElementById(
       "o_pickup"
     ).value;
 
 
-  if(!name||!phone||!pick){
+  if(!name || !phone || !pick){
 
-    return alert(
+    alert(
       "Completează numele, telefonul și data."
     );
 
+    return;
   }
 
 
-  let sr=
+  const sr =
     db.series.find(
       x=>x.id===sid
     );
@@ -2206,69 +1750,49 @@ function addOrder(){
 
   if(!sr){
 
-    return alert(
-      "Seria selectată nu există."
-    );
+    alert("Seria nu există.");
 
+    return;
   }
 
 
-  let qty={};
+  const qty={};
+
+  let invalid=false;
 
 
-  /* Verificăm toate cantitățile
-     înainte de salvare */
-
-  for(const s of db.species){
+  db.species.forEach(s=>{
 
     qty[s]=
       +document.getElementById(
         "q_"+s
-      ).value||0;
+      ).value || 0;
 
 
-    let available=
-      getAvailable(
-        sid,
+    const available =
+      getSeriesAvailable(
+        sr,
         s
       );
 
 
-    if(qty[s]>available){
+    if(qty[s]>available)
+      invalid=true;
 
-      return alert(
-
-        `Nu poți salva comanda.
-
-${s}: ai introdus ${qty[s]}, dar sunt disponibile doar ${available}.`
-
-      );
-
-    }
-
-  }
+  });
 
 
-  /* Nu permitem comenzi complet goale */
+  if(invalid){
 
-  let total=
-    Object.values(qty)
-      .reduce(
-        (a,b)=>a+b,
-        0
-      );
-
-
-  if(total<=0){
-
-    return alert(
-      "Introdu cel puțin o cantitate."
+    alert(
+      "Nu poți introduce o cantitate mai mare decât disponibilul seriei."
     );
 
+    return;
   }
 
 
-  let o={
+  const o={
 
     id:crypto.randomUUID(),
 
@@ -2297,27 +1821,20 @@ ${s}: ai introdus ${qty[s]}, dar sunt disponibile doar ${available}.`
 
   render();
 
-
-  alert(
-    "Comanda a fost salvată!"
-  );
-
 }
 
 
-/* =========================
+/* =========================================================
    STERGERE COMANDA
-========================= */
+========================================================= */
 
 function delOrder(id){
 
   if(
-    confirm(
-      "Ștergi comanda?"
-    )
+    confirm("Ștergi comanda?")
   ){
 
-    db.orders=
+    db.orders =
       db.orders.filter(
         x=>x.id!==id
       );
@@ -2325,63 +1842,375 @@ function delOrder(id){
     save();
 
     render();
+  }
+}
+
+
+/* =========================================================
+   SMS REAL
+========================================================= */
+
+async function sendRealSms(id){
+
+  const o =
+    db.orders.find(
+      x=>x.id===id
+    );
+
+  if(!o)return;
+
+
+  const message =
+    db.sms
+    .replaceAll(
+      "[NUME]",
+      o.name
+    )
+    .replaceAll(
+      "[DATA]",
+      fmt(o.pickup)
+    )
+    .replaceAll(
+      "[COMANDA]",
+      orderText(o)
+    );
+
+
+  if(
+    !confirm(
+      `Trimiți SMS REAL către ${o.phone}?\n\n${message}`
+    )
+  ){
+
+    return;
+  }
+
+
+  try{
+
+    const response =
+      await fetch(
+        SMS_SERVER + "/send-sms",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            phone:o.phone,
+
+            message:message
+
+          })
+
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      data.success===false
+    ){
+
+      throw new Error(
+        data.error ||
+        "Serverul SMS a returnat o eroare."
+      );
+
+    }
+
+
+    alert(
+      "✅ SMS-ul a fost trimis cu succes către " +
+      o.phone
+    );
+
+
+  }catch(error){
+
+    alert(
+      "❌ SMS-ul NU a fost trimis.\n\n" +
+      error.message +
+      "\n\nVerifică dacă:\n" +
+      "• serverul SMS este pornit\n" +
+      "• laptopul și dispozitivul sunt pe aceeași rețea Wi-Fi\n" +
+      "• Samsung S10 este conectat"
+    );
 
   }
 
 }
 
 
-/* =========================
-   SMS
-========================= */
+/* =========================================================
+   CLIENTI
+========================================================= */
 
-function reminder(id){
+function renderClients(){
 
-  let o=
-    db.orders.find(
-      x=>x.id===id
-    );
+  const map={};
 
 
-  if(!o)return;
+  db.orders.forEach(o=>{
+
+    if(!map[o.phone]){
+
+      map[o.phone]={
+        name:o.name,
+        phone:o.phone,
+        count:0,
+        last:""
+      };
+
+    }
 
 
-  let msg=
-    db.sms
-      .replaceAll(
-        "[NUME]",
-        o.name
-      )
-      .replaceAll(
-        "[DATA]",
-        fmt(o.pickup)
-      )
-      .replaceAll(
-        "[COMANDA]",
-        orderText(o)
-      );
+    map[o.phone].count++;
 
 
-  alert(
+    const oldDate =
+      map[o.phone].last
+      ? new Date(map[o.phone].last)
+      : 0;
 
-    "SIMULARE SMS către "+
-    o.phone+
-    "\n\n"+
-    msg+
-    "\n\nÎn versiunea conectată, acest mesaj va fi trimis prin serverul SMS."
+    const newDate =
+      new Date(o.pickup);
 
-  );
 
+    if(
+      newDate > oldDate
+    ){
+
+      map[o.phone].last =
+        o.pickup;
+
+    }
+
+  });
+
+
+  const clients =
+    Object.values(map);
+
+
+  document.getElementById(
+    "clientsTable"
+  ).innerHTML=
+
+  clients.length
+
+  ?
+
+  clients.map(c=>`
+
+    <tr>
+
+      <td>
+        <b>${esc(c.name)}</b>
+      </td>
+
+      <td>${esc(c.phone)}</td>
+
+      <td>${c.count}</td>
+
+      <td>
+        ${
+          c.last
+          ? fmt(c.last)
+          : "-"
+        }
+      </td>
+
+    </tr>
+
+  `).join("")
+
+  :
+
+  "<tr><td colspan='4' class='empty'>Nu există clienți.</td></tr>";
 }
 
 
-/* =========================
-   SALVARE SMS
-========================= */
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+let calendarDate =
+  new Date();
+
+
+function changeCalendarMonth(delta){
+
+  calendarDate.setMonth(
+    calendarDate.getMonth()+delta
+  );
+
+  renderCalendar();
+}
+
+
+function renderCalendar(){
+
+  const year =
+    calendarDate.getFullYear();
+
+  const month =
+    calendarDate.getMonth();
+
+
+  const start =
+    new Date(
+      year,
+      month,
+      1
+    );
+
+
+  const end =
+    new Date(
+      year,
+      month+1,
+      0
+    );
+
+
+  const monthName =
+    start.toLocaleDateString(
+      "ro-RO",
+      {
+        month:"long",
+        year:"numeric"
+      }
+    );
+
+
+  document.getElementById(
+    "calendarHead"
+  ).innerHTML=
+
+  `
+
+    <div class="calendar-title">
+      ${monthName}
+    </div>
+
+    <div class="calendar-nav">
+
+      <button
+        onclick="changeCalendarMonth(-1)"
+      >
+        ‹ Luna anterioară
+      </button>
+
+      <button
+        onclick="calendarDate=new Date();renderCalendar()"
+      >
+        Astăzi
+      </button>
+
+      <button
+        onclick="changeCalendarMonth(1)"
+      >
+        Luna următoare ›
+      </button>
+
+    </div>
+
+  `;
+
+
+  const firstDay =
+    (start.getDay()+6)%7;
+
+
+  let cells=[];
+
+
+  for(
+    let i=0;
+    i<firstDay;
+    i++
+  ){
+
+    cells.push("<div></div>");
+
+  }
+
+
+  for(
+    let d=1;
+    d<=end.getDate();
+    d++
+  ){
+
+    const iso =
+      `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+
+
+    const os =
+      db.orders.filter(
+        o=>o.pickup===iso
+      );
+
+
+    cells.push(`
+
+      <div class="day">
+
+        <b>${d}</b>
+
+        ${
+          os.slice(0,3)
+          .map(o=>`
+
+            <div class="event">
+
+              ${esc(o.name)}
+              —
+              ${esc(orderText(o))}
+
+            </div>
+
+          `).join("")
+        }
+
+        ${
+          os.length>3
+          ? `<div class="muted">
+              +${os.length-3} comenzi
+            </div>`
+          : ""
+        }
+
+      </div>
+
+    `);
+
+  }
+
+
+  document.getElementById(
+    "calendarGrid"
+  ).innerHTML=
+    cells.join("");
+}
+
+
+/* =========================================================
+   SETARI SMS
+========================================================= */
 
 function saveSms(){
 
-  db.sms=
+  db.sms =
     document.getElementById(
       "smsText"
     ).value;
@@ -2389,15 +2218,14 @@ function saveSms(){
   save();
 
   alert(
-    "Mesaj salvat."
+    "Mesajul SMS a fost salvat."
   );
-
 }
 
 
-/* =========================
+/* =========================================================
    MODAL
-========================= */
+========================================================= */
 
 function show(content){
 
@@ -2405,11 +2233,9 @@ function show(content){
     "modalContent"
   ).innerHTML=content;
 
-
   document.getElementById(
     "modal"
   ).classList.add("show");
-
 }
 
 
@@ -2418,20 +2244,23 @@ function closeModal(){
   document.getElementById(
     "modal"
   ).classList.remove("show");
-
 }
 
 
-/* =========================
+/* =========================================================
    PORNIRE APLICATIE
-========================= */
+========================================================= */
 
 render();
 
-</script>
+checkSmsServer();
 
-</body>
-</html>
+setInterval(
+  checkSmsServer,
+  10000
+);
+
+</script>
 
 </body>
 </html>
