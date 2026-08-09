@@ -1,29 +1,134 @@
-Ferma de Pui
-Manager comenzi
-🏠 Dashboard
-🐔 Serii
-📋 Comenzi
-👥 Clienți
-📅 Calendar
-⚙️ Setări
-Dashboard
-+ Comandă nouă
-Pui albi
-0
-în comenzi
-Pui roșii
-0
-în comenzi
-Curcani
-0
-în comenzi
-Rațe
-0
-în comenzi
-Bibilici
-0
-în comenzi
-Următoarele ridicări
-Nu există ridicări viitoare.
-Stoc / comenzi pe serii
-Adaugă prima serie.
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ferma de Pui — Prima versiune</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f6f8;color:#1d2329}
+.app{display:flex;min-height:100vh}.side{width:235px;background:#173b2b;color:white;padding:22px 14px;position:fixed;inset:0 auto 0 0}.brand{font-size:20px;font-weight:800;padding:0 10px 25px}.brand small{display:block;font-size:12px;font-weight:500;opacity:.7;margin-top:4px}.nav button{display:block;width:100%;border:0;background:transparent;color:#dfe9e3;text-align:left;padding:12px 12px;border-radius:10px;margin:4px 0;font-size:15px;cursor:pointer}.nav button.active,.nav button:hover{background:#28563f;color:#fff}.main{margin-left:235px;width:calc(100% - 235px);padding:25px;max-width:1400px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.top h1{margin:0;font-size:28px}.btn{border:0;border-radius:9px;padding:11px 15px;background:#237a4b;color:#fff;font-weight:700;cursor:pointer}.btn.secondary{background:#e8ece9;color:#173b2b}.btn.danger{background:#b43a3a}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:white;border-radius:14px;padding:18px;box-shadow:0 2px 10px #00000009}.metric{font-size:28px;font-weight:800;margin-top:8px}.muted{color:#6b747c;font-size:13px}.section{margin-top:20px}.section h2{font-size:18px;margin:0 0 12px}.tablewrap{overflow:auto;background:#fff;border-radius:14px;box-shadow:0 2px 10px #00000009}.table{width:100%;border-collapse:collapse;min-width:750px}.table th,.table td{padding:12px 14px;border-bottom:1px solid #edf0ef;text-align:left;font-size:14px}.table th{background:#fafbfa;font-size:12px;text-transform:uppercase;color:#6b747c}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#e6f3ea;color:#1e7042;font-size:12px;font-weight:700}.pill.gray{background:#eef0f2;color:#606970}.row-actions{display:flex;gap:6px}.empty{padding:35px;text-align:center;color:#777}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:15px;z-index:10}.modal.show{display:flex}.modalbox{background:#fff;border-radius:16px;width:min(720px,100%);max-height:90vh;overflow:auto;padding:22px}.modalbox h2{margin-top:0}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.field input,.field select{width:100%;padding:11px;border:1px solid #d7dcda;border-radius:9px;font-size:15px}.species{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px}.modalfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.search{padding:10px 12px;border:1px solid #d7dcda;border-radius:9px;width:280px}.toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.note{background:#fff8dc;border-left:4px solid #d8ae21;padding:12px;border-radius:8px;font-size:13px;margin-top:14px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.day{background:white;border-radius:10px;padding:10px;min-height:85px;box-shadow:0 2px 7px #00000008}.day b{font-size:12px}.event{margin-top:6px;background:#e6f3ea;color:#1e7042;border-radius:6px;padding:4px;font-size:11px}.hidden{display:none}
+@media(max-width:800px){.side{width:70px;padding:15px 8px}.brand{font-size:0;text-align:center}.brand:before{content:"🐔";font-size:24px}.brand small,.nav span{display:none}.main{margin-left:70px;width:calc(100% - 70px);padding:15px}.grid{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.species{grid-template-columns:1fr}.toolbar{align-items:stretch;flex-direction:column}.search{width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand">Ferma de Pui<small>Manager comenzi</small></div>
+<nav class="nav">
+<button data-page="dashboard" class="active">🏠 <span>Dashboard</span></button>
+<button data-page="series">🐔 <span>Serii</span></button>
+<button data-page="orders">📋 <span>Comenzi</span></button>
+<button data-page="clients">👥 <span>Clienți</span></button>
+<button data-page="calendar">📅 <span>Calendar</span></button>
+<button data-page="settings">⚙️ <span>Setări</span></button>
+</nav>
+</aside>
+<main class="main">
+<section id="dashboard" class="page">
+<div class="top"><h1>Dashboard</h1><button class="btn" onclick="openOrder()">+ Comandă nouă</button></div>
+<div class="grid" id="metrics"></div>
+<div class="section card"><h2>Următoarele ridicări</h2><div id="upcoming"></div></div>
+<div class="section card"><h2>Stoc / comenzi pe serii</h2><div id="seriesSummary"></div></div>
+</section>
+
+<section id="series" class="page hidden">
+<div class="top"><h1>Serii</h1><button class="btn" onclick="openSeries()">+ Serie nouă</button></div>
+<div class="tablewrap"><table class="table"><thead><tr><th>Serie</th><th>Data</th><th>Albi</th><th>Roșii</th><th>Curcani</th><th>Rațe</th><th>Bibilici</th><th></th></tr></thead><tbody id="seriesTable"></tbody></table></div>
+</section>
+
+<section id="orders" class="page hidden">
+<div class="top"><h1>Comenzi</h1><button class="btn" onclick="openOrder()">+ Comandă nouă</button></div>
+<div class="toolbar"><input class="search" id="orderSearch" placeholder="Caută după nume sau telefon" oninput="renderOrders()"><select id="orderFilter" onchange="renderOrders()" class="search"><option value="">Toate seriile</option></select></div>
+<div class="tablewrap"><table class="table"><thead><tr><th>Client</th><th>Telefon</th><th>Serie</th><th>Ridicare</th><th>Comandă</th><th>Status</th><th></th></tr></thead><tbody id="ordersTable"></tbody></table></div>
+</section>
+
+<section id="clients" class="page hidden">
+<div class="top"><h1>Clienți</h1><button class="btn" onclick="openOrder()">+ Client / comandă</button></div>
+<div class="tablewrap"><table class="table"><thead><tr><th>Nume</th><th>Telefon</th><th>Comenzi</th><th>Ultima ridicare</th></tr></thead><tbody id="clientsTable"></tbody></table></div>
+</section>
+
+<section id="calendar" class="page hidden">
+<div class="top"><h1>Calendar ridicări</h1></div>
+<div class="card"><div id="calendarGrid" class="calendar"></div></div>
+</section>
+
+<section id="settings" class="page hidden">
+<div class="top"><h1>Setări</h1></div>
+<div class="card">
+<h2>Mesaje automate</h2>
+<p class="muted">În prima versiune poți configura textul. Trimiterea SMS reală va fi conectată în versiunea cu server.</p>
+<div class="field"><label>Mesaj reminder cu 1 zi înainte</label><textarea id="smsText" style="width:100%;min-height:110px;padding:11px;border:1px solid #d7dcda;border-radius:9px">Bună ziua, [NUME]! Vă reamintim că mâine, [DATA], aveți programată ridicarea comenzii: [COMANDA]. Vă așteptăm la fermă!</textarea></div>
+<br><button class="btn" onclick="saveSms()">Salvează mesajul</button>
+<div class="note">Pentru SMS automat real vom conecta un furnizor SMS și un server care verifică zilnic comenzile. Aplicația va putea funcționa apoi pe mai multe telefoane și calculatoare cu aceleași date.</div>
+</div>
+</section>
+</main>
+</div>
+
+<div id="modal" class="modal"><div class="modalbox" id="modalContent"></div></div>
+
+<script>
+const key="ferma_pui_v1";
+let db=JSON.parse(localStorage.getItem(key)||'null')||{
+ species:["Pui albi","Pui roșii","Curcani","Rațe","Bibilici"],
+ series:[],
+ orders:[],
+ sms:"Bună ziua, [NUME]! Vă reamintim că mâine, [DATA], aveți programată ridicarea comenzii: [COMANDA]. Vă așteptăm la fermă!"
+};
+function save(){localStorage.setItem(key,JSON.stringify(db))}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function fmt(d){return new Date(d+"T12:00:00").toLocaleDateString("ro-RO",{day:"2-digit",month:"2-digit",year:"numeric"})}
+function orderText(o){return db.species.map(s=>o.qty[s]?`${o.qty[s]} ${s.toLowerCase()}`:"").filter(Boolean).join(", ")}
+function nav(page){document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));document.getElementById(page).classList.remove("hidden");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));render()}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>nav(b.dataset.page));
+function render(){
+document.getElementById("smsText").value=db.sms;
+renderDashboard();renderSeries();renderOrders();renderClients();renderCalendar();
+}
+function renderDashboard(){
+let totals={};db.species.forEach(s=>totals[s]=db.orders.reduce((a,o)=>a+(+o.qty[s]||0),0));
+document.getElementById("metrics").innerHTML=db.species.map(s=>`<div class="card"><div class="muted">${s}</div><div class="metric">${totals[s].toLocaleString("ro-RO")}</div><div class="muted">în comenzi</div></div>`).join("");
+let arr=[...db.orders].filter(o=>o.status!=="Ridicată").sort((a,b)=>a.pickup.localeCompare(b.pickup)).slice(0,8);
+document.getElementById("upcoming").innerHTML=arr.length?`<table class="table"><tr><th>Client</th><th>Data</th><th>Serie</th><th>Comandă</th></tr>${arr.map(o=>`<tr><td>${esc(o.name)}</td><td>${fmt(o.pickup)}</td><td>${esc(o.series)}</td><td>${esc(orderText(o))}</td></tr>`).join("")}</table>`:"<div class='empty'>Nu există ridicări viitoare.</div>";
+document.getElementById("seriesSummary").innerHTML=db.series.length?`<table class="table"><tr><th>Serie</th><th>Data</th>${db.species.map(s=>`<th>${s}</th>`).join("")}</tr>${db.series.map(sr=>{let os=db.orders.filter(o=>o.seriesId===sr.id);return `<tr><td>${esc(sr.name)}</td><td>${fmt(sr.date)}</td>${db.species.map(s=>`<td>${os.reduce((a,o)=>a+(+o.qty[s]||0),0)} / ${sr.stock[s]||0}</td>`).join("")}</tr>`}).join("")}</table>`:"<div class='empty'>Adaugă prima serie.</div>";
+}
+function renderSeries(){
+document.getElementById("seriesTable").innerHTML=db.series.length?db.series.map(sr=>`<tr><td><b>${esc(sr.name)}</b></td><td>${fmt(sr.date)}</td>${db.species.map(s=>`<td>${sr.stock[s]||0}</td>`).join("")}<td><button class="btn danger" onclick="delSeries('${sr.id}')">Șterge</button></td></tr>`).join(""):"<tr><td colspan='8' class='empty'>Nu există serii.</td></tr>";
+}
+function renderOrders(){
+let sel=document.getElementById("orderFilter"), old=sel.value;
+sel.innerHTML='<option value="">Toate seriile</option>'+db.series.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");sel.value=old;
+let q=(document.getElementById("orderSearch")?.value||"").toLowerCase(), f=sel.value;
+let arr=db.orders.filter(o=>(!f||o.seriesId===f)&&(`${o.name} ${o.phone}`.toLowerCase().includes(q)));
+document.getElementById("ordersTable").innerHTML=arr.length?arr.map(o=>`<tr><td><b>${esc(o.name)}</b></td><td>${esc(o.phone)}</td><td>${esc(o.series)}</td><td>${fmt(o.pickup)}</td><td>${esc(orderText(o))}</td><td><span class="pill ${o.status==="Ridicată"?"gray":""}">${o.status}</span></td><td class="row-actions"><button class="btn secondary" onclick="reminder('${o.id}')">SMS</button><button class="btn danger" onclick="delOrder('${o.id}')">×</button></td></tr>`).join(""):"<tr><td colspan='7' class='empty'>Nu există comenzi.</td></tr>";
+}
+function renderClients(){
+let map={};db.orders.forEach(o=>{map[o.phone]??={name:o.name,phone:o.phone,count:0,last:""};map[o.phone].count++;map[o.phone].last=Math.max(map[o.phone].last?new Date(map[o.phone].last):0,new Date(o.pickup))});
+document.getElementById("clientsTable").innerHTML=Object.values(map).length?Object.values(map).map(c=>`<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.phone)}</td><td>${c.count}</td><td>${c.last?new Date(c.last).toLocaleDateString("ro-RO"):"-"}</td></tr>`).join(""):"<tr><td colspan='4' class='empty'>Nu există clienți.</td></tr>";
+}
+function renderCalendar(){
+let dates=[...new Set(db.orders.map(o=>o.pickup))].sort();let today=new Date();let start=new Date(today.getFullYear(),today.getMonth(),1),end=new Date(today.getFullYear(),today.getMonth()+1,0);
+let cells=[];for(let i=0;i<start.getDay();i++)cells.push("<div></div>");for(let d=1;d<=end.getDate();d++){let iso=`${start.getFullYear()}-${String(start.getMonth()+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`, os=db.orders.filter(o=>o.pickup===iso);cells.push(`<div class="day"><b>${d}</b>${os.slice(0,3).map(o=>`<div class="event">${esc(o.name)} — ${esc(orderText(o))}</div>`).join("")}${os.length>3?`<div class="muted">+${os.length-3} comenzi</div>`:""}</div>`)}document.getElementById("calendarGrid").innerHTML=cells.join("");
+}
+function openSeries(){
+let fields=db.species.map(s=>`<div class="field"><label>${s}</label><input type="number" min="0" id="st_${esc(s)}" value="0"></div>`).join("");
+show(`<h2>Serie nouă</h2><div class="formgrid"><div class="field"><label>Nume serie</label><input id="sr_name" placeholder="Ex. Seria 17 august"></div><div class="field"><label>Data seriei</label><input type="date" id="sr_date"></div></div><h3>Număr disponibil</h3><div class="species">${fields}</div><div class="modalfoot"><button class="btn secondary" onclick="closeModal()">Anulează</button><button class="btn" onclick="addSeries()">Salvează</button></div>`);
+}
+function addSeries(){let sr={id:crypto.randomUUID(),name:document.getElementById("sr_name").value||"Serie nouă",date:document.getElementById("sr_date").value,stock:{}};db.species.forEach(s=>sr.stock[s]=+document.getElementById("st_"+s).value||0);if(!sr.date)return alert("Alege data seriei.");db.series.push(sr);save();closeModal();render();}
+function delSeries(id){if(db.orders.some(o=>o.seriesId===id))return alert("Nu poți șterge o serie care are comenzi.");if(confirm("Ștergi seria?")){db.series=db.series.filter(x=>x.id!==id);save();render()}}
+function openOrder(){
+if(!db.series.length)return alert("Adaugă mai întâi o serie.");
+let fields=db.species.map(s=>`<div class="field"><label>${s}</label><input type="number" min="0" id="q_${esc(s)}" value="0"></div>`).join("");
+show(`<h2>Comandă nouă</h2><div class="formgrid"><div class="field"><label>Nume client</label><input id="o_name" placeholder="Ion Popescu"></div><div class="field"><label>Telefon</label><input id="o_phone" placeholder="07xx xxx xxx" inputmode="tel"></div><div class="field"><label>Serie</label><select id="o_series" onchange="syncPickup()">${db.series.map(s=>`<option value="${s.id}">${esc(s.name)} — ${fmt(s.date)}</option>`).join("")}</select></div><div class="field"><label>Data ridicării</label><input id="o_pickup" type="date"></div></div><h3>Cantități</h3><div class="species">${fields}</div><div class="modalfoot"><button class="btn secondary" onclick="closeModal()">Anulează</button><button class="btn" onclick="addOrder()">Salvează comanda</button></div>`);
+syncPickup();
+}
+function syncPickup(){let s=db.series.find(x=>x.id===document.getElementById("o_series").value);if(s)document.getElementById("o_pickup").value=s.date}
+function addOrder(){let name=document.getElementById("o_name").value.trim(),phone=document.getElementById("o_phone").value.trim(),sid=document.getElementById("o_series").value,pick=document.getElementById("o_pickup").value;if(!name||!phone||!pick)return alert("Completează numele, telefonul și data.");let sr=db.series.find(x=>x.id===sid),qty={};db.species.forEach(s=>qty[s]=+document.getElementById("q_"+s).value||0);let o={id:crypto.randomUUID(),name,phone,seriesId:sid,series:sr.name,pickup:pick,qty,status:"Comandă"};db.orders.push(o);save();closeModal();render();}
+function delOrder(id){if(confirm("Ștergi comanda?")){db.orders=db.orders.filter(x=>x.id!==id);save();render()}}
+function reminder(id){let o=db.orders.find(x=>x.id===id),msg=db.sms.replaceAll("[NUME]",o.name).replaceAll("[DATA]",fmt(o.pickup)).replaceAll("[COMANDA]",orderText(o));alert("SIMULARE SMS către "+o.phone+"\\n\\n"+msg+"\\n\\nÎn versiunea conectată, acest mesaj va fi trimis automat.");}
+function saveSms(){db.sms=document.getElementById("smsText").value;save();alert("Mesaj salvat.")}
+function show(content){document.getElementById("modalContent").innerHTML=content;document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+render();
+</script>
+</body></html>
