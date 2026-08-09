@@ -6,7 +6,7 @@
 <title>Ferma de Pui — Prima versiune</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f6f8;color:#1d2329}
-.app{display:flex;min-height:100vh}.side{width:235px;background:#173b2b;color:white;padding:22px 14px;position:fixed;inset:0 auto 0 0}.brand{font-size:20px;font-weight:800;padding:0 10px 25px}.brand small{display:block;font-size:12px;font-weight:500;opacity:.7;margin-top:4px}.nav button{display:block;width:100%;border:0;background:transparent;color:#dfe9e3;text-align:left;padding:12px 12px;border-radius:10px;margin:4px 0;font-size:15px;cursor:pointer}.nav button.active,.nav button:hover{background:#28563f;color:#fff}.main{margin-left:235px;width:calc(100% - 235px);padding:25px;max-width:1400px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.top h1{margin:0;font-size:28px}.btn{border:0;border-radius:9px;padding:11px 15px;background:#237a4b;color:#fff;font-weight:700;cursor:pointer}.btn.secondary{background:#e8ece9;color:#173b2b}.btn.danger{background:#b43a3a}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:white;border-radius:14px;padding:18px;box-shadow:0 2px 10px #00000009}.metric{font-size:28px;font-weight:800;margin-top:8px}.muted{color:#6b747c;font-size:13px}.section{margin-top:20px}.section h2{font-size:18px;margin:0 0 12px}.tablewrap{overflow:auto;background:#fff;border-radius:14px;box-shadow:0 2px 10px #00000009}.table{width:100%;border-collapse:collapse;min-width:750px}.table th,.table td{padding:12px 14px;border-bottom:1px solid #edf0ef;text-align:left;font-size:14px}.table th{background:#fafbfa;font-size:12px;text-transform:uppercase;color:#6b747c}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#e6f3ea;color:#1e7042;font-size:12px;font-weight:700}.pill.gray{background:#eef0f2;color:#606970}.row-actions{display:flex;gap:6px}.empty{padding:35px;text-align:center;color:#777}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:15px;z-index:10}.modal.show{display:flex}.modalbox{background:#fff;border-radius:16px;width:min(720px,100%);max-height:90vh;overflow:auto;padding:22px}.modalbox h2{margin-top:0}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.field input,.field select{width:100%;padding:11px;border:1px solid #d7dcda;border-radius:9px;font-size:15px}.species{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px}.modalfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.search{padding:10px 12px;border:1px solid #d7dcda;border-radius:9px;width:280px}.toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.note{background:#fff8dc;border-left:4px solid #d8ae21;padding:12px;border-radius:8px;font-size:13px;margin-top:14px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.day{background:white;border-radius:10px;padding:10px;min-height:85px;box-shadow:0 2px 7px #00000008}.day b{font-size:12px}.event{margin-top:6px;background:#e6f3ea;color:#1e7042;border-radius:6px;padding:4px;font-size:11px}.hidden{display:none}
+.app{display:flex;min-height:100vh}.side{width:235px;background:#173b2b;color:white;padding:22px 14px;position:fixed;inset:0 auto 0 0}.brand{font-size:20px;font-weight:800;padding:0 10px 25px}.brand small{display:block;font-size:12px;font-weight:500;opacity:.7;margin-top:4px}.nav button{display:block;width:100%;border:0;background:transparent;color:#dfe9e3;text-align:left;padding:12px 12px;border-radius:10px;margin:4px 0;font-size:15px;cursor:pointer}.nav button.active,.nav button:hover{background:#28563f;color:#fff}.main{margin-left:235px;width:calc(100% - 235px);padding:25px;max-width:1400px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.top h1{margin:0;font-size:28px}.btn{border:0;border-radius:9px;padding:11px 15px;background:#237a4b;color:#fff;font-weight:700;cursor:pointer}.btn.secondary{background:#e8ece9;color:#173b2b}.btn.danger{background:#b43a3a}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:white;border-radius:14px;padding:18px;box-shadow:0 2px 10px #00000009}.metric{font-size:28px;font-weight:800;margin-top:8px}.muted{color:#6b747c;font-size:13px}.section{margin-top:20px}.section h2{font-size:18px;margin:0 0 12px}.tablewrap{overflow:auto;background:#fff;border-radius:14px;box-shadow:0 2px 10px #00000009}.table{width:100%;border-collapse:collapse;min-width:750px}.table th,.table td{padding:12px 14px;border-bottom:1px solid #edf0ef;text-align:left;font-size:14px}.table th{background:#fafbfa;font-size:12px;text-transform:uppercase;color:#6b747c}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#e6f3ea;color:#1e7042;font-size:12px;font-weight:700}.pill.gray{background:#eef0f2;color:#606970}.row-actions{display:flex;gap:6px}.empty{padding:35px;text-align:center;color:#777}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:15px;z-index:10}.modal.show{display:flex}.modalbox{background:#fff;border-radius:16px;width:min(720px,100%);max-height:90vh;overflow:auto;padding:22px}.modalbox h2{margin-top:0}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.field input,.field select{width:100%;padding:11px;border:1px solid #d7dcda;border-radius:9px;font-size:15px}.species{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px}.modalfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.search{padding:10px 12px;border:1px solid #d7dcda;border-radius:9px;width:280px}.toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.note{background:#fff8dc;border-left:4px solid #d8ae21;padding:12px;border-radius:8px;font-size:13px;margin-top:14px}.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.calendar-title{font-size:20px;font-weight:800;text-transform:capitalize}.calendar-nav{display:flex;gap:7px}.calendar-nav button{border:0;border-radius:8px;padding:8px 12px;background:#e8ece9;color:#173b2b;font-weight:700;cursor:pointer}.calendar-nav button:hover{background:#dce5df}.weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-bottom:7px}.weekday{text-align:center;font-size:12px;font-weight:800;color:#6b747c;padding:7px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.day{background:white;border-radius:10px;padding:10px;min-height:85px;box-shadow:0 2px 7px #00000008}.day b{font-size:12px}.event{margin-top:6px;background:#e6f3ea;color:#1e7042;border-radius:6px;padding:4px;font-size:11px}.hidden{display:none}
 @media(max-width:800px){.side{width:70px;padding:15px 8px}.brand{font-size:0;text-align:center}.brand:before{content:"🐔";font-size:24px}.brand small,.nav span{display:none}.main{margin-left:70px;width:calc(100% - 70px);padding:15px}.grid{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.species{grid-template-columns:1fr}.toolbar{align-items:stretch;flex-direction:column}.search{width:100%}}
 </style>
 </head>
@@ -49,7 +49,7 @@
 
 <section id="calendar" class="page hidden">
 <div class="top"><h1>Calendar ridicări</h1></div>
-<div class="card"><div id="calendarGrid" class="calendar"></div></div>
+<div class="card"><div id="calendarHead" class="calendar-head"></div><div class="weekdays"><div class="weekday">Lun</div><div class="weekday">Mar</div><div class="weekday">Mie</div><div class="weekday">Joi</div><div class="weekday">Vin</div><div class="weekday">Sâm</div><div class="weekday">Dum</div></div><div id="calendarGrid" class="calendar"></div></div>
 </section>
 
 <section id="settings" class="page hidden">
@@ -106,16 +106,48 @@ function renderClients(){
 let map={};db.orders.forEach(o=>{map[o.phone]??={name:o.name,phone:o.phone,count:0,last:""};map[o.phone].count++;map[o.phone].last=Math.max(map[o.phone].last?new Date(map[o.phone].last):0,new Date(o.pickup))});
 document.getElementById("clientsTable").innerHTML=Object.values(map).length?Object.values(map).map(c=>`<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.phone)}</td><td>${c.count}</td><td>${c.last?new Date(c.last).toLocaleDateString("ro-RO"):"-"}</td></tr>`).join(""):"<tr><td colspan='4' class='empty'>Nu există clienți.</td></tr>";
 }
+let calendarDate=new Date(2027,0,1);
+
+function changeCalendarMonth(delta){
+calendarDate.setMonth(calendarDate.getMonth()+delta);
+renderCalendar();
+}
+
 function renderCalendar(){
-let dates=[...new Set(db.orders.map(o=>o.pickup))].sort();let today=new Date();let start=new Date(today.getFullYear(),today.getMonth(),1),end=new Date(today.getFullYear(),today.getMonth()+1,0);
-let cells=[];for(let i=0;i<start.getDay();i++)cells.push("<div></div>");for(let d=1;d<=end.getDate();d++){let iso=`${start.getFullYear()}-${String(start.getMonth()+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`, os=db.orders.filter(o=>o.pickup===iso);cells.push(`<div class="day"><b>${d}</b>${os.slice(0,3).map(o=>`<div class="event">${esc(o.name)} — ${esc(orderText(o))}</div>`).join("")}${os.length>3?`<div class="muted">+${os.length-3} comenzi</div>`:""}</div>`)}document.getElementById("calendarGrid").innerHTML=cells.join("");
+let year=calendarDate.getFullYear(),month=calendarDate.getMonth();
+let start=new Date(year,month,1),end=new Date(year,month+1,0);
+let monthName=start.toLocaleDateString("ro-RO",{month:"long",year:"numeric"});
+document.getElementById("calendarHead").innerHTML=`<div class="calendar-title">${monthName}</div><div class="calendar-nav"><button onclick="changeCalendarMonth(-1)">‹ Luna anterioară</button><button onclick="calendarDate=new Date(2027,0,1);renderCalendar()">Astăzi</button><button onclick="changeCalendarMonth(1)">Luna următoare ›</button></div>`;
+
+let firstDay=(start.getDay()+6)%7;
+let cells=[];
+for(let i=0;i<firstDay;i++)cells.push("<div></div>");
+for(let d=1;d<=end.getDate();d++){
+let iso=`${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+let os=db.orders.filter(o=>o.pickup===iso);
+cells.push(`<div class="day"><b>${d}</b>${os.slice(0,3).map(o=>`<div class="event">${esc(o.name)} — ${esc(orderText(o))}</div>`).join("")}${os.length>3?`<div class="muted">+${os.length-3} comenzi</div>`:""}</div>`);
+}
+document.getElementById("calendarGrid").innerHTML=cells.join("");
 }
 function openSeries(){
 let fields=db.species.map(s=>`<div class="field"><label>${s}</label><input type="number" min="0" id="st_${esc(s)}" value="0"></div>`).join("");
 show(`<h2>Serie nouă</h2><div class="formgrid"><div class="field"><label>Nume serie</label><input id="sr_name" placeholder="Ex. Seria 17 august"></div><div class="field"><label>Data seriei</label><input type="date" id="sr_date"></div></div><h3>Număr disponibil</h3><div class="species">${fields}</div><div class="modalfoot"><button class="btn secondary" onclick="closeModal()">Anulează</button><button class="btn" onclick="addSeries()">Salvează</button></div>`);
 }
 function addSeries(){let sr={id:crypto.randomUUID(),name:document.getElementById("sr_name").value||"Serie nouă",date:document.getElementById("sr_date").value,stock:{}};db.species.forEach(s=>sr.stock[s]=+document.getElementById("st_"+s).value||0);if(!sr.date)return alert("Alege data seriei.");db.series.push(sr);save();closeModal();render();}
-function delSeries(id){if(db.orders.some(o=>o.seriesId===id))return alert("Nu poți șterge o serie care are comenzi.");if(confirm("Ștergi seria?")){db.series=db.series.filter(x=>x.id!==id);save();render()}}
+function delSeries(id){
+  let sr=db.series.find(x=>x.id===id);
+  if(!sr)return;
+  let linkedOrders=db.orders.filter(o=>o.seriesId===id);
+  let msg=linkedOrders.length
+    ? `Seria „${sr.name}” are ${linkedOrders.length} comand${linkedOrders.length===1?"ă":"i"} asociat${linkedOrders.length===1?"ă":"e"}.\\n\\nDacă ștergi seria, comenzile asociate vor fi șterse și ele.\\n\\nContinui?`
+    : `Ștergi seria „${sr.name}”?`;
+  if(confirm(msg)){
+    db.orders=db.orders.filter(o=>o.seriesId!==id);
+    db.series=db.series.filter(x=>x.id!==id);
+    save();
+    render();
+  }
+}
 function openOrder(){
 if(!db.series.length)return alert("Adaugă mai întâi o serie.");
 let fields=db.species.map(s=>`<div class="field"><label>${s}</label><input type="number" min="0" id="q_${esc(s)}" value="0"></div>`).join("");
