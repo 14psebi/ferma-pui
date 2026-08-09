@@ -404,6 +404,8 @@ body{
 
 <main class="main">
 
+<!-- DASHBOARD -->
+
 <section id="dashboard" class="page">
 
 <div class="top">
@@ -435,6 +437,8 @@ Server SMS...
 
 </section>
 
+
+<!-- SERII -->
 
 <section id="series" class="page hidden">
 
@@ -468,6 +472,8 @@ Server SMS...
 
 </section>
 
+
+<!-- COMENZI -->
 
 <section id="orders" class="page hidden">
 
@@ -520,6 +526,8 @@ class="search"
 </section>
 
 
+<!-- CLIENTI -->
+
 <section id="clients" class="page hidden">
 
 <div class="top">
@@ -549,6 +557,8 @@ class="search"
 </section>
 
 
+<!-- CALENDAR -->
+
 <section id="calendar" class="page hidden">
 
 <div class="top">
@@ -575,6 +585,8 @@ class="search"
 
 </section>
 
+
+<!-- SETARI -->
 
 <section id="settings" class="page hidden">
 
@@ -636,14 +648,10 @@ iar Samsung S10 trebuie să fie conectat la aceeași rețea Wi-Fi.
 <script>
 
 /* =========================================================
-   CONFIGURARE SERVER
+   CONFIGURARE SERVER SMS
 ========================================================= */
 
 const SMS_SERVER = "http://192.168.68.111:3000";
-const SYNC_SERVER = "http://192.168.68.111:3000";
-const SYNC_ENDPOINT = SYNC_SERVER + "/api/data";
-
-const SYNC_INTERVAL = 2000;
 
 
 /* =========================================================
@@ -652,7 +660,9 @@ const SYNC_INTERVAL = 2000;
 
 const key = "ferma_pui_v2";
 
-const defaultDb = {
+let db =
+JSON.parse(localStorage.getItem(key) || "null") ||
+{
   species:[
     "Pui albi",
     "Pui roșii",
@@ -670,49 +680,15 @@ const defaultDb = {
 };
 
 
-let localDbRaw = localStorage.getItem(key);
-
-let db =
-  localDbRaw
-  ? JSON.parse(localDbRaw)
-  : JSON.parse(JSON.stringify(defaultDb));
-
-
-/* =========================================================
-   STARE SINCRONIZARE
-========================================================= */
-
-let syncInitialized = false;
-let syncBusy = false;
-let syncTimer = null;
-let syncSaveTimer = null;
-let lastServerSignature = "";
-let localSaveInProgress = false;
-
-
 /* =========================================================
    FUNCTII GENERALE
 ========================================================= */
 
-function saveLocalOnly(){
-
-  localStorage.setItem(
-    key,
-    JSON.stringify(db)
-  );
-}
-
-
 function save(){
-
-  saveLocalOnly();
-
-  scheduleSyncUpload();
+  localStorage.setItem(key,JSON.stringify(db));
 }
-
 
 function esc(s){
-
   return String(s ?? "")
   .replace(/[&<>"']/g,m=>({
     "&":"&amp;",
@@ -723,9 +699,7 @@ function esc(s){
   }[m]));
 }
 
-
 function fmt(d){
-
   if(!d)return "-";
 
   return new Date(d+"T12:00:00")
@@ -735,7 +709,6 @@ function fmt(d){
     year:"numeric"
   });
 }
-
 
 function orderText(o){
 
@@ -748,7 +721,6 @@ function orderText(o){
   .filter(Boolean)
   .join(", ");
 }
-
 
 function nav(page){
 
@@ -772,91 +744,11 @@ function nav(page){
   render();
 }
 
-
 document
 .querySelectorAll(".nav button")
 .forEach(b =>
   b.onclick=()=>nav(b.dataset.page)
 );
-
-
-/* =========================================================
-   NORMALIZARE DATE PRIMITE DE LA SERVER
-========================================================= */
-
-function isValidDb(data){
-
-  return !!(
-    data &&
-    Array.isArray(data.species) &&
-    Array.isArray(data.series) &&
-    Array.isArray(data.orders)
-  );
-}
-
-
-function extractServerDb(payload){
-
-  if(!payload)return null;
-
-  if(isValidDb(payload))
-    return payload;
-
-  if(isValidDb(payload.data))
-    return payload.data;
-
-  if(isValidDb(payload.db))
-    return payload.db;
-
-  if(
-    payload.data &&
-    isValidDb(payload.data.data)
-  )
-    return payload.data.data;
-
-  return null;
-}
-
-
-function cloneDb(data){
-
-  return JSON.parse(
-    JSON.stringify(data)
-  );
-}
-
-
-function dbSignature(data){
-
-  try{
-
-    return JSON.stringify(data);
-
-  }catch(error){
-
-    return "";
-
-  }
-}
-
-
-/* =========================================================
-   STATUS SINCRONIZARE
-========================================================= */
-
-function setSyncStatus(text,online){
-
-  const badge =
-    document.getElementById("serverStatus");
-
-  if(!badge)return;
-
-  badge.textContent=text;
-
-  badge.className =
-    "connection " +
-    (online ? "online" : "offline");
-}
 
 
 /* =========================================================
@@ -885,28 +777,14 @@ async function checkSmsServer(){
     if(response.ok){
 
       if(badge){
-
-        if(syncInitialized){
-
-          badge.textContent=
-            "Sincronizare ONLINE";
-
-        }else{
-
-          badge.textContent=
-            "Server ONLINE";
-
-        }
-
-        badge.className=
-          "connection online";
+        badge.textContent="SMS Server ONLINE";
+        badge.className="connection online";
       }
 
       if(settings){
-
         settings.innerHTML=
         `<div class="success">
-          ✅ Serverul este online la
+          ✅ Serverul SMS este online la
           <b>${SMS_SERVER}</b>
         </div>`;
       }
@@ -919,19 +797,14 @@ async function checkSmsServer(){
   }catch(error){
 
     if(badge){
-
-      badge.textContent=
-        "Server OFFLINE";
-
-      badge.className=
-        "connection offline";
+      badge.textContent="SMS Server OFFLINE";
+      badge.className="connection offline";
     }
 
     if(settings){
-
       settings.innerHTML=
       `<div class="error">
-        ❌ Serverul nu poate fi accesat.
+        ❌ Serverul SMS nu poate fi accesat.
         <br><br>
         Verifică dacă serverul este pornit și dacă dispozitivul este pe aceeași rețea Wi-Fi cu laptopul.
       </div>`;
@@ -939,273 +812,6 @@ async function checkSmsServer(){
 
     return false;
   }
-}
-
-
-/* =========================================================
-   SINCRONIZARE — POST
-========================================================= */
-
-async function uploadToServer(){
-
-  if(!syncInitialized)return;
-
-  if(syncBusy)return;
-
-  syncBusy=true;
-
-  try{
-
-    const payload =
-      cloneDb(db);
-
-    const response =
-      await fetch(
-        SYNC_ENDPOINT,
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:
-            JSON.stringify(payload),
-
-          cache:"no-store"
-        }
-      );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "Serverul a returnat HTTP " +
-        response.status
-      );
-
-    }
-
-
-    lastServerSignature =
-      dbSignature(payload);
-
-    setSyncStatus(
-      "Sincronizare ONLINE",
-      true
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Eroare sincronizare POST:",
-      error
-    );
-
-    setSyncStatus(
-      "Sincronizare OFFLINE",
-      false
-    );
-
-  }finally{
-
-    syncBusy=false;
-
-  }
-}
-
-
-/* =========================================================
-   SINCRONIZARE — PROGRAMARE SALVARE
-========================================================= */
-
-function scheduleSyncUpload(){
-
-  if(!syncInitialized)return;
-
-  clearTimeout(syncSaveTimer);
-
-  syncSaveTimer =
-    setTimeout(
-      uploadToServer,
-      150
-    );
-}
-
-
-/* =========================================================
-   SINCRONIZARE — GET
-========================================================= */
-
-async function downloadFromServer(){
-
-  if(syncBusy)return;
-
-  try{
-
-    const response =
-      await fetch(
-        SYNC_ENDPOINT,
-        {
-          method:"GET",
-          cache:"no-store"
-        }
-      );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "Serverul a returnat HTTP " +
-        response.status
-      );
-
-    }
-
-
-    const payload =
-      await response.json();
-
-
-    const serverDb =
-      extractServerDb(payload);
-
-
-    /*
-       SERVER GOL
-
-       Dacă serverul nu are încă date,
-       datele existente local sunt protejate
-       și sunt urcate pe server.
-    */
-
-    if(!serverDb){
-
-      const localSignature =
-        dbSignature(db);
-
-
-      const hasLocalData =
-        db.series.length > 0 ||
-        db.orders.length > 0;
-
-
-      if(hasLocalData){
-
-        syncInitialized=true;
-
-        await uploadToServer();
-
-        return;
-
-      }
-
-
-      /*
-         Dacă nici local nu există date,
-         folosim structura implicită.
-      */
-
-      syncInitialized=true;
-
-      await uploadToServer();
-
-      return;
-    }
-
-
-    /*
-       SERVERUL ARE DATE
-
-       După prima sincronizare,
-       serverul este sursa comună.
-    */
-
-    const serverSignature =
-      dbSignature(serverDb);
-
-
-    if(
-      !syncInitialized ||
-      serverSignature !==
-      dbSignature(db)
-    ){
-
-      db =
-        cloneDb(serverDb);
-
-      saveLocalOnly();
-
-      lastServerSignature =
-        serverSignature;
-
-      render();
-
-    }
-
-
-    syncInitialized=true;
-
-    setSyncStatus(
-      "Sincronizare ONLINE",
-      true
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Eroare sincronizare GET:",
-      error
-    );
-
-    setSyncStatus(
-      "Sincronizare OFFLINE",
-      false
-    );
-
-  }
-}
-
-
-/* =========================================================
-   INITIALIZARE SINCRONIZARE
-========================================================= */
-
-async function initializeSync(){
-
-  if(syncInitialized)return;
-
-  await downloadFromServer();
-
-  if(!syncInitialized){
-
-    syncInitialized=true;
-
-  }
-
-  startSyncLoop();
-}
-
-
-/* =========================================================
-   SINCRONIZARE AUTOMATĂ
-========================================================= */
-
-function startSyncLoop(){
-
-  if(syncTimer)
-    clearInterval(syncTimer);
-
-  syncTimer =
-    setInterval(
-      async ()=>{
-        await downloadFromServer();
-      },
-      SYNC_INTERVAL
-    );
 }
 
 
@@ -1226,6 +832,8 @@ function render(){
   renderOrders();
   renderClients();
   renderCalendar();
+
+  checkSmsServer();
 }
 
 
@@ -1653,35 +1261,38 @@ function delSeries(id){
     );
 
 
-  if(linkedOrders.length){
+  let msg =
+    linkedOrders.length
 
-    alert(
-      `Nu poți șterge seria „${sr.name}” deoarece are ${linkedOrders.length} comand${linkedOrders.length===1?"ă":"i"} asociat${linkedOrders.length===1?"ă":"e"}.\n\n` +
-      `Șterge mai întâi comenzile asociate acestei serii.`
-    );
+    ?
 
-    return;
+    `Seria „${sr.name}” are ${linkedOrders.length} comand${linkedOrders.length===1?"ă":"i"} asociat${linkedOrders.length===1?"ă":"e"}.
+
+Dacă ștergi seria, comenzile asociate vor fi șterse și ele.
+
+Continui?`
+
+    :
+
+    `Ștergi seria „${sr.name}”?`;
+
+
+  if(confirm(msg)){
+
+    db.orders =
+      db.orders.filter(
+        o=>o.seriesId!==id
+      );
+
+    db.series =
+      db.series.filter(
+        x=>x.id!==id
+      );
+
+    save();
+
+    render();
   }
-
-
-  if(
-    !confirm(
-      `Ești sigur că vrei să ștergi seria „${sr.name}”?`
-    )
-  ){
-
-    return;
-  }
-
-
-  db.series =
-    db.series.filter(
-      x=>x.id!==id
-    );
-
-  save();
-
-  render();
 }
 
 
@@ -1710,18 +1321,7 @@ function renderOrders(){
     `).join("");
 
 
-  if(
-    [...sel.options]
-    .some(x=>x.value===old)
-  ){
-
-    sel.value=old;
-
-  }else{
-
-    sel.value="";
-
-  }
+  sel.value=old;
 
 
   const q =
@@ -2654,8 +2254,6 @@ function closeModal(){
 render();
 
 checkSmsServer();
-
-initializeSync();
 
 setInterval(
   checkSmsServer,
