@@ -684,8 +684,20 @@ JSON.parse(localStorage.getItem(key) || "null") ||
    FUNCTII GENERALE
 ========================================================= */
 
-function save(){
-  localStorage.setItem(key,JSON.stringify(db));
+async function save(){
+    localStorage.setItem(key, JSON.stringify(db));
+
+    try {
+        await fetch(SMS_SERVER + "/api/data", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(db)
+        });
+    } catch (error) {
+        console.warn("Sincronizarea nu a reușit:", error);
+    }
 }
 
 function esc(s){
