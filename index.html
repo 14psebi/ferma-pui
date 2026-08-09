@@ -2257,19 +2257,144 @@ function closeModal(){
     "modal"
   ).classList.remove("show");
 }
+/* =========================================================
+   SINCRONIZARE DATE
+========================================================= */
 
+async function loadDataFromServer(){
+
+  try{
+
+    const response = await fetch(
+      SMS_SERVER + "/api/data",
+      {
+        method: "GET",
+        cache: "no-store"
+      }
+    );
+
+    if(!response.ok){
+      throw new Error("Server indisponibil");
+    }
+
+    const result = await response.json();
+
+    if(!result.success || !result.data){
+      return;
+    }
+
+    const serverDb = result.data;
+
+    const hasServerData =
+      (serverDb.orders && serverDb.orders.length > 0) ||
+      (serverDb.series && serverDb.series.length > 0) ||
+      (serverDb.clients && serverDb.clients.length > 0);
+
+    if(hasServerData){
+
+      db = serverDb;
+
+      localStorage.setItem(
+        key,
+        JSON.stringify(db)
+      );
+
+      render();
+
+      console.log(
+        "Date încărcate de pe server."
+      );
+
+    }else{
+
+      await save();
+
+      console.log(
+        "Datele locale au fost trimise pe server."
+      );
+    }
+
+  }catch(error){
+
+    console.warn(
+      "Sincronizare indisponibilă:",
+      error
+    );
+
+  }
+
+}
+
+
+async function syncDataFromServer(){
+
+  try{
+
+    const response = await fetch(
+      SMS_SERVER + "/api/data",
+      {
+        method: "GET",
+        cache: "no-store"
+      }
+    );
+
+    if(!response.ok){
+      return;
+    }
+
+    const result = await response.json();
+
+    if(!result.success || !result.data){
+      return;
+    }
+
+    const serverDb = result.data;
+
+    if(
+      JSON.stringify(db) !==
+      JSON.stringify(serverDb)
+    ){
+
+      db = serverDb;
+
+      localStorage.setItem(
+        key,
+        JSON.stringify(db)
+      );
+
+      render();
+
+      console.log(
+        "Date sincronizate."
+      );
+    }
+
+  }catch(error){
+
+    console.warn(
+      "Actualizarea datelor a eșuat."
+    );
+
+  }
+
+}
 
 /* =========================================================
    PORNIRE APLICATIE
 ========================================================= */
 
-render();
+loadDataFromServer();
 
 checkSmsServer();
 
 setInterval(
   checkSmsServer,
   10000
+);
+
+setInterval(
+  syncDataFromServer,
+  3000
 );
 
 </script>
