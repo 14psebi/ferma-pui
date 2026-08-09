@@ -82,6 +82,7 @@ body{
 }
 .btn.danger{background:#b43a3a}
 .btn.sms{background:#2878b8}
+.btn:disabled{opacity:.55;cursor:not-allowed}
 
 .grid{
   display:grid;
@@ -330,6 +331,52 @@ body{
 }
 .hidden{display:none}
 
+.series-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+  gap:16px
+}
+.series-card{
+  background:#fff;
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 2px 10px #00000009
+}
+.series-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:14px
+}
+.series-card-title{font-size:18px;font-weight:800}
+.series-stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin:12px 0
+}
+.series-stat{
+  background:#f7f9f8;
+  border-radius:9px;
+  padding:9px
+}
+.series-stat b{display:block;font-size:16px}
+.series-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px
+}
+.sms-progress{
+  margin-top:12px;
+  padding:10px;
+  border-radius:9px;
+  background:#eef6ff;
+  color:#235a86;
+  font-size:13px
+}
+
 .connection{
   font-size:12px;
   padding:6px 9px;
@@ -447,28 +494,7 @@ Server SMS...
 <button class="btn" onclick="openSeries()">+ Serie nouă</button>
 </div>
 
-<div class="tablewrap">
-
-<table class="table">
-
-<thead>
-<tr>
-<th>Serie</th>
-<th>Data</th>
-<th>Pui albi</th>
-<th>Pui roșii</th>
-<th>Curcani</th>
-<th>Rațe</th>
-<th>Bibilici</th>
-<th></th>
-</tr>
-</thead>
-
-<tbody id="seriesTable"></tbody>
-
-</table>
-
-</div>
+<div id="seriesCards" class="series-grid"></div>
 
 </section>
 
@@ -1068,63 +1094,82 @@ function renderSeriesSummary(){
 
 function renderSeries(){
 
-  const tbody =
-    document.getElementById("seriesTable");
+  const container =
+    document.getElementById("seriesCards");
 
-  tbody.innerHTML=
+  if(!container)return;
 
-  db.series.length
+  if(!db.series.length){
+    container.innerHTML=
+      "<div class='card empty'>Nu există serii. Adaugă prima serie.</div>";
+    return;
+  }
 
-  ?
+  container.innerHTML = db.series.map(sr=>{
 
-  db.series.map(sr=>`
+    const orders = db.orders.filter(o=>
+      o.seriesId===sr.id &&
+      o.status!=="Anulată"
+    );
 
-    <tr>
+    const smsSent = sr.smsSentAt
+      ? new Date(sr.smsSentAt).toLocaleString("ro-RO")
+      : "Nu a fost trimis";
 
-      <td>
-        <b>${esc(sr.name)}</b>
-      </td>
+    const speciesHtml = db.species.map(s=>{
+      const stock = +sr.stock[s] || 0;
+      const sold = getSeriesSold(sr,s);
+      const available = getSeriesAvailable(sr,s);
 
-      <td>${fmt(sr.date)}</td>
+      return `
+        <div class="series-stat">
+          <div class="muted">${esc(s)}</div>
+          <b>${stockHtml(available)}</b>
+          <div class="muted">${sold} comandate / ${stock} total</div>
+        </div>
+      `;
+    }).join("");
 
-      ${
-        db.species.map(s=>`
+    return `
+      <div class="series-card">
+        <div class="series-card-head">
+          <div>
+            <div class="series-card-title">🐔 ${esc(sr.name)}</div>
+            <div class="muted">📅 ${fmt(sr.date)}</div>
+          </div>
+          <span class="pill">${orders.length} ${orders.length===1?"client":"clienți"}</span>
+        </div>
 
-          <td>
+        <div class="series-stats">
+          ${speciesHtml}
+        </div>
 
-            ${stockHtml(
-              getSeriesAvailable(sr,s)
-            )}
+        <div class="muted">
+          📱 Reminder SMS: <b>${esc(smsSent)}</b>
+        </div>
 
-            <div class="muted">
-              ${getSeriesSold(sr,s)} / ${sr.stock[s]||0}
-            </div>
+        <div id="smsProgress_${sr.id}" class="sms-progress" style="display:none"></div>
 
-          </td>
+        <div class="series-actions">
+          <button
+            class="btn sms"
+            onclick="sendSeriesSms('${sr.id}')"
+            ${orders.length ? "" : "disabled"}
+          >
+            📱 Trimite SMS tuturor (${orders.length})
+          </button>
 
-        `).join("")
-      }
-
-      <td>
-
-        <button
-          class="btn danger"
-          onclick="delSeries('${sr.id}')"
-        >
-          Șterge
-        </button>
-
-      </td>
-
-    </tr>
-
-  `).join("")
-
-  :
-
-  "<tr><td colspan='8' class='empty'>Nu există serii.</td></tr>";
+          <button
+            class="btn danger"
+            onclick="delSeries('${sr.id}')"
+          >
+            Șterge
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
 }
-
 
 /* =========================================================
    ADAUGARE SERIE
@@ -1959,6 +2004,141 @@ async function sendRealSms(id){
 
   }
 
+}
+
+
+/* =========================================================
+   SMS PENTRU TOATĂ SERIA
+========================================================= */
+
+async function sendSeriesSms(seriesId){
+
+  const sr = db.series.find(x=>x.id===seriesId);
+  if(!sr)return;
+
+  const orders = db.orders.filter(o=>
+    o.seriesId===seriesId &&
+    o.status!=="Anulată" &&
+    o.phone
+  );
+
+  if(!orders.length){
+    alert("Nu există clienți cu număr de telefon pentru această serie.");
+    return;
+  }
+
+  const preview = orders.slice(0,3).map(o=>
+    `• ${o.name} — ${o.phone}`
+  ).join("\n");
+
+  const extra = orders.length>3
+    ? `\n• ... și încă ${orders.length-3}`
+    : "";
+
+  const messageExample = db.sms
+    .replaceAll("[NUME]", orders[0].name)
+    .replaceAll("[DATA]", fmt(orders[0].pickup))
+    .replaceAll("[COMANDA]", orderText(orders[0]));
+
+  if(!confirm(
+    `Trimiți SMS REAL tuturor celor ${orders.length} clienți din „${sr.name}”?\n\n`+
+    `${preview}${extra}\n\n`+
+    `Exemplu mesaj pentru primul client:\n${messageExample}`
+  )){
+    return;
+  }
+
+  const progress = document.getElementById(`smsProgress_${seriesId}`);
+  const button = document.querySelector(
+    `.series-card button[onclick="sendSeriesSms('${seriesId}')"]`
+  );
+
+  if(progress){
+    progress.style.display="block";
+    progress.textContent=`📱 Se trimit SMS-urile... 0/${orders.length}`;
+  }
+
+  if(button)button.disabled=true;
+
+  let sent=0;
+  let failed=0;
+  const errors=[];
+
+  for(const o of orders){
+
+    const message = db.sms
+      .replaceAll("[NUME]", o.name)
+      .replaceAll("[DATA]", fmt(o.pickup))
+      .replaceAll("[COMANDA]", orderText(o));
+
+    try{
+      const response = await fetch(
+        SMS_SERVER + "/send-sms",
+        {
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify({
+            phone:o.phone,
+            message:message
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if(!response.ok || data.success===false){
+        throw new Error(
+          data.error || "Eroare la gateway-ul SMS."
+        );
+      }
+
+      sent++;
+
+    }catch(error){
+      failed++;
+      errors.push(`${o.name} (${o.phone}): ${error.message}`);
+    }
+
+    if(progress){
+      progress.textContent =
+        `📱 Se trimit SMS-urile... ${sent+failed}/${orders.length} `+
+        `| ✅ ${sent} | ❌ ${failed}`;
+    }
+
+    // Pauză scurtă între SMS-uri pentru a evita trimiterea prea rapidă.
+    if(sent+failed < orders.length){
+      await new Promise(resolve=>setTimeout(resolve,500));
+    }
+  }
+
+  if(sent>0 && failed===0){
+    sr.smsSentAt = new Date().toISOString();
+    await save();
+  }
+
+  if(progress){
+    progress.innerHTML =
+      `📱 Finalizat: <b>${sent}</b> trimise, <b>${failed}</b> eșuate.`;
+  }
+
+  if(button)button.disabled=false;
+
+  let result =
+    `SMS-uri pentru „${sr.name}”\n\n`+
+    `✅ Trimise: ${sent}\n`+
+    `❌ Eșuate: ${failed}`;
+
+  if(errors.length){
+    result += "\n\nErori:\n" + errors.slice(0,10).join("\n");
+    if(errors.length>10){
+      result += `\n... și încă ${errors.length-10} erori.`;
+    }
+  }
+
+  alert(result);
+  renderSeries();
 }
 
 
