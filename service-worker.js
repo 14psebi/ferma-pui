@@ -1,4 +1,4 @@
-const CACHE_NAME = "ferma-pui-v1";
+const CACHE_NAME = "ferma-pui-v2";
 
 const FILES_TO_CACHE = [
   "./",
