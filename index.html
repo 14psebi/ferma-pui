@@ -1647,7 +1647,7 @@ function renderOrders(){
 
   arr.map(o=>`
 
-    <tr>
+   <tr style="${o.status==="Ridicată" ? "background:#dff5e5;" : ""}">
 
       <td>
         <b>${esc(o.name)}</b>
@@ -1661,20 +1661,16 @@ function renderOrders(){
 
       <td>${esc(orderText(o))}</td>
 
-      <td>
-
-        <span class="pill ${
-          o.status==="Ridicată"
-          ?"gray"
-          :""
-        }">
-
-          ${esc(o.status)}
-
-        </span>
-
-      </td>
-
+     <td>
+  <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+    <input
+      type="checkbox"
+      ${o.status==="Ridicată" ? "checked" : ""}
+      onchange="toggleOrderStatus('${o.id}', this.checked)"
+    >
+    Ridicată
+  </label>
+</td>
       <td class="row-actions">
 
         <button
@@ -1748,7 +1744,7 @@ function openOrder(editId=null){
           type="number"
           min="0"
           id="q_${esc(s)}"
-          value="0"
+          value=" "
         >
 
         <div
@@ -1870,7 +1866,7 @@ function openOrder(editId=null){
 
     db.species.forEach(s=>{
       const input = document.getElementById("q_"+s);
-      if(input) input.value = +((existing.qty||{})[s]) || 0;
+      if(input) input.value = +((existing.qty||{})[s]) || " ";
     });
   }
 
