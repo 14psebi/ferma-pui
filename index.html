@@ -2205,7 +2205,15 @@ function getSeriesAvailableForOrder(sr,species,excludeId=null){
 /* =========================================================
    STERGERE COMANDA
 ========================================================= */
+async function toggleOrderStatus(id, checked){
+  const o = db.orders.find(x => x.id === id);
+  if(!o) return;
 
+  o.status = checked ? "Ridicată" : "";
+
+  await save();
+  render();
+}
 async function delOrder(id){
 
   if(
