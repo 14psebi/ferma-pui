@@ -709,7 +709,16 @@ JSON.parse(localStorage.getItem(key) || "null") ||
   sms:
   "Bună ziua! Vă reamintim că pe data [DATA] aveți de ridicat [COMANDA]. Vă așteptăm la Ferma de Pui Bistrița Nouă."
 };
+  
+// Adaugă automat speciile noi în baza existentă
+["Gâște", "Ouătoare"].forEach(specie => {
+  if(!db.species.includes(specie)){
+    db.species.push(specie);
+  }
+});
 
+localStorage.setItem(key, JSON.stringify(db));
+  
 // Actualizează automat mesajul vechi dacă încă folosește [NUME].
 if(!db.sms || db.sms.includes("[NUME]")){
   db.sms = "Bună ziua! Vă reamintim că pe data [DATA] aveți de ridicat [COMANDA]. Vă așteptăm la Ferma de Pui Bistrița Nouă.";
