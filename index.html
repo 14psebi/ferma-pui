@@ -709,9 +709,10 @@ JSON.parse(localStorage.getItem(key) || "null") ||
 /* =========================================================
    FUNCTII GENERALE
 ========================================================= */
-
+let dataWriteInProgress = false;
 async function save(){
     localStorage.setItem(key, JSON.stringify(db));
+  dataWriteInProgress = true;
 
     try {
         await fetch(SMS_SERVER + "/api/data", {
@@ -724,6 +725,7 @@ async function save(){
     } catch (error) {
         console.warn("Sincronizarea nu a reușit:", error);
     }
+  dataWriteInProgress = false;
 }
 
 function esc(s){
@@ -2057,7 +2059,7 @@ function getSeriesAvailableForOrder(sr,species,excludeId=null){
    STERGERE COMANDA
 ========================================================= */
 
-function delOrder(id){
+async function delOrder(id){
 
   if(
     confirm("Ștergi comanda?")
@@ -2068,7 +2070,7 @@ function delOrder(id){
         x=>x.id!==id
       );
 
-    save();
+   await save();
 
     render();
   }
@@ -2680,6 +2682,9 @@ async function loadDataFromServer(){
 
 async function syncDataFromServer(){
 
+if(dataWriteInProgress){
+    return;
+}
   try{
 
     const response = await fetch(
