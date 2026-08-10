@@ -644,7 +644,7 @@ Mesaj reminder cu 1 zi înainte
 <textarea
 id="smsText"
 style="width:100%;min-height:110px"
->Bună ziua, [NUME]! Vă reamintim că mâine, [DATA], aveți programată ridicarea comenzii: [COMANDA]. Vă așteptăm la fermă!</textarea>
+>Bună ziua! Vă reamintim că pe data [DATA] aveți de ridicat [COMANDA]. Vă așteptăm la Ferma de Pui Bistrița Nouă.</textarea>
 
 </div>
 
@@ -705,8 +705,14 @@ JSON.parse(localStorage.getItem(key) || "null") ||
   orders:[],
 
   sms:
-  "Bună ziua, [NUME]! Vă reamintim că mâine, [DATA], aveți programată ridicarea comenzii: [COMANDA]. Vă așteptăm la fermă!"
+  "Bună ziua! Vă reamintim că pe data [DATA] aveți de ridicat [COMANDA]. Vă așteptăm la Ferma de Pui Bistrița Nouă."
 };
+
+// Actualizează automat mesajul vechi dacă încă folosește [NUME].
+if(!db.sms || db.sms.includes("[NUME]")){
+  db.sms = "Bună ziua! Vă reamintim că pe data [DATA] aveți de ridicat [COMANDA]. Vă așteptăm la Ferma de Pui Bistrița Nouă.";
+  localStorage.setItem(key, JSON.stringify(db));
+}
 
 
 /* =========================================================
@@ -1170,6 +1176,13 @@ function renderSeries(){
 
         <div class="series-actions">
           <button
+            class="btn secondary"
+            onclick="editSeries('${sr.id}')"
+          >
+            ✏️ Modifică
+          </button>
+
+          <button
             class="btn sms"
             onclick="sendSeriesSms('${sr.id}')"
             ${orders.length ? "" : "disabled"}
@@ -1377,6 +1390,141 @@ function addSeries(){
 
   closeModal();
 
+  render();
+}
+
+
+/* =========================================================
+   MODIFICARE SERIE
+========================================================= */
+
+let editingSeriesId = null;
+
+function editSeries(id){
+
+  const sr = db.series.find(x=>x.id===id);
+
+  if(!sr)return;
+
+  editingSeriesId = sr.id;
+
+  const fields =
+    db.species.map(s=>`
+
+      <div class="field">
+
+        <label>${esc(s)}</label>
+
+        <input
+          type="number"
+          min="0"
+          id="st_${esc(s)}"
+          value="${+sr.stock[s] || 0}"
+        >
+
+      </div>
+
+    `).join("");
+
+  show(`
+
+    <h2>Modifică seria</h2>
+
+    <div class="formgrid">
+
+      <div class="field">
+
+        <label>Nume serie</label>
+
+        <input
+          id="sr_name"
+          value="${esc(sr.name)}"
+        >
+
+      </div>
+
+      <div class="field">
+
+        <label>Data seriei</label>
+
+        <input
+          type="date"
+          id="sr_date"
+          value="${sr.date || ""}"
+        >
+
+      </div>
+
+    </div>
+
+    <h3>Număr disponibil inițial</h3>
+
+    <div class="species">
+      ${fields}
+    </div>
+
+    <div class="modalfoot">
+
+      <button
+        class="btn secondary"
+        onclick="editingSeriesId=null;closeModal()"
+      >
+        Anulează
+      </button>
+
+      <button
+        class="btn"
+        onclick="saveSeriesEdit()"
+      >
+        Salvează modificările
+      </button>
+
+    </div>
+
+  `);
+}
+
+function saveSeriesEdit(){
+
+  if(!editingSeriesId)return;
+
+  const sr = db.series.find(x=>x.id===editingSeriesId);
+
+  if(!sr)return;
+
+  const name =
+    document.getElementById("sr_name").value.trim() || "Serie nouă";
+
+  const date =
+    document.getElementById("sr_date").value;
+
+  if(!date){
+    alert("Alege data seriei.");
+    return;
+  }
+
+  const stock = {};
+
+  db.species.forEach(s=>{
+    stock[s] =
+      +document.getElementById("st_"+s).value || 0;
+  });
+
+  sr.name = name;
+  sr.date = date;
+  sr.stock = stock;
+
+  db.orders.forEach(o=>{
+    if(o.seriesId===sr.id){
+      o.series = sr.name;
+      o.pickup = sr.date;
+    }
+  });
+
+  editingSeriesId = null;
+
+  save();
+  closeModal();
   render();
 }
 
@@ -2097,10 +2245,6 @@ async function sendRealSms(id){
   const message =
     db.sms
     .replaceAll(
-      "[NUME]",
-      o.name
-    )
-    .replaceAll(
       "[DATA]",
       fmt(o.pickup)
     )
@@ -2213,7 +2357,6 @@ async function sendSeriesSms(seriesId){
     : "";
 
   const messageExample = db.sms
-    .replaceAll("[NUME]", orders[0].name)
     .replaceAll("[DATA]", fmt(orders[0].pickup))
     .replaceAll("[COMANDA]", orderText(orders[0]));
 
@@ -2244,7 +2387,6 @@ async function sendSeriesSms(seriesId){
   for(const o of orders){
 
     const message = db.sms
-      .replaceAll("[NUME]", o.name)
       .replaceAll("[DATA]", fmt(o.pickup))
       .replaceAll("[COMANDA]", orderText(o));
 
@@ -2642,12 +2784,10 @@ async function loadDataFromServer(){
 
     const serverDb = result.data;
 
-    const hasServerData =
-      (serverDb.orders && serverDb.orders.length > 0) ||
-      (serverDb.series && serverDb.series.length > 0) ||
-      (serverDb.clients && serverDb.clients.length > 0);
+   
+     
 
-    if(hasServerData){
+    if(result.success && result.data){
 
       db = serverDb;
 
@@ -2661,16 +2801,8 @@ async function loadDataFromServer(){
       console.log(
         "Date încărcate de pe server."
       );
-
-    }else{
-
-      await save();
-
-      console.log(
-        "Datele locale au fost trimise pe server."
-      );
-    }
-
+}
+   
   }catch(error){
 
     console.warn(
