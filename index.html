@@ -2857,7 +2857,17 @@ async function loadDataFromServer(){
 
     if(result.success && result.data){
 
-      db = serverDb;
+db.species = [
+  ...new Set([
+    ...(db.species || []),
+    ...(serverDb.species || [])
+  ])
+];
+
+db = {
+  ...serverDb,
+  species: db.species
+};
 
       localStorage.setItem(
         key,
@@ -2930,7 +2940,16 @@ async function syncDataFromServer(){
       JSON.stringify(serverDb)
     ){
 
-      db = serverDb;
+     db.species = [
+  ...new Set([
+    ...(db.species || []),
+    ...(serverDb.species || [])
+  ])
+];
+db = {
+  ...serverDb,
+  species: db.species
+};
 
       localStorage.setItem(
         key,
