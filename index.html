@@ -1,12 +1,6 @@
 <!doctype html>
 <html lang="ro">
 <head>
-  <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#166534">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ferma Pui">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ferma de Pui — Manager</title>
@@ -1156,6 +1150,19 @@ function renderSeries(){
 
         <div id="smsProgress_${sr.id}" class="sms-progress" style="display:none"></div>
 
+        <div style="margin-top:12px">
+          <input
+            class="search"
+            id="seriesSearch_${sr.id}"
+            placeholder="🔎 Caută client în această serie"
+            oninput="renderSeriesClients('${sr.id}')"
+          >
+          <div
+            id="seriesClients_${sr.id}"
+            style="margin-top:8px"
+          ></div>
+        </div>
+
         <div class="series-actions">
           <button
             class="btn sms"
@@ -1175,6 +1182,69 @@ function renderSeries(){
       </div>
     `;
   }).join("");
+
+  db.series.forEach(sr=>renderSeriesClients(sr.id));
+}
+
+function renderSeriesClients(seriesId){
+
+  const container =
+    document.getElementById("seriesClients_"+seriesId);
+
+  if(!container)return;
+
+  const input =
+    document.getElementById("seriesSearch_"+seriesId);
+
+  const q =
+    (input?.value || "").trim().toLowerCase();
+
+  const orders = db.orders.filter(o=>
+    o.seriesId===seriesId &&
+    o.status!=="Anulată" &&
+    (!q || (`${o.name} ${o.phone} ${orderText(o)}`.toLowerCase().includes(q)))
+  );
+
+  if(!orders.length){
+    container.innerHTML = q
+      ? "<div class='muted'>Nu am găsit niciun client.</div>"
+      : "<div class='muted'>Scrie numele sau telefonul pentru a căuta.</div>";
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="tablewrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Telefon</th>
+            <th>Comandă</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${orders.map(o=>`
+            <tr>
+              <td><b>${esc(o.name)}</b></td>
+              <td>${esc(o.phone)}</td>
+              <td>${esc(orderText(o))}</td>
+              <td>${esc(o.status)}</td>
+              <td>
+                <button
+                  class="btn secondary"
+                  onclick="editOrder('${o.id}')"
+                >
+                  ✏️ Modifică
+                </button>
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
 
 /* =========================================================
@@ -1363,6 +1433,8 @@ Continui?`
    COMENZI
 ========================================================= */
 
+let editingOrderId = null;
+
 function renderOrders(){
 
   const sel =
@@ -1453,6 +1525,13 @@ function renderOrders(){
       <td class="row-actions">
 
         <button
+          class="btn secondary"
+          onclick="editOrder('${o.id}')"
+        >
+          ✏️ Modifică
+        </button>
+
+        <button
           class="btn sms"
           onclick="sendRealSms('${o.id}')"
         >
@@ -1482,7 +1561,7 @@ function renderOrders(){
    ADAUGARE COMANDA
 ========================================================= */
 
-function openOrder(){
+function openOrder(editId=null){
 
   if(!db.series.length){
 
@@ -1490,6 +1569,17 @@ function openOrder(){
 
     return;
   }
+
+  const existing = editId
+    ? db.orders.find(o=>o.id===editId)
+    : null;
+
+  if(editId && !existing){
+    alert("Comanda nu mai există.");
+    return;
+  }
+
+  editingOrderId = existing ? existing.id : null;
 
 
   const fields =
@@ -1521,7 +1611,7 @@ function openOrder(){
 
   show(`
 
-    <h2>Comandă nouă</h2>
+    <h2>${existing ? "Modifică comanda" : "Comandă nouă"}</h2>
 
     <div class="formgrid">
 
@@ -1612,12 +1702,24 @@ function openOrder(){
         class="btn"
         onclick="addOrder()"
       >
-        Salvează comanda
+        ${existing ? "Salvează modificările" : "Salvează comanda"}
       </button>
 
     </div>
 
   `);
+
+  if(existing){
+    document.getElementById("o_name").value = existing.name || "";
+    document.getElementById("o_phone").value = existing.phone || "";
+    document.getElementById("o_series").value = existing.seriesId || "";
+    document.getElementById("o_pickup").value = existing.pickup || "";
+
+    db.species.forEach(s=>{
+      const input = document.getElementById("q_"+s);
+      if(input) input.value = +((existing.qty||{})[s]) || 0;
+    });
+  }
 
 
   db.species.forEach(s=>{
@@ -1666,9 +1768,10 @@ function updateAvailable(){
   db.species.forEach(s=>{
 
     const available =
-      getSeriesAvailable(
+      getSeriesAvailableForOrder(
         sr,
-        s
+        s,
+        editingOrderId
       );
 
 
@@ -1833,9 +1936,10 @@ function addOrder(){
 
 
     const available =
-      getSeriesAvailable(
+      getSeriesAvailableForOrder(
         sr,
-        s
+        s,
+        editingOrderId
       );
 
 
@@ -1855,28 +1959,55 @@ function addOrder(){
   }
 
 
-  const o={
+  if(editingOrderId){
 
-    id:crypto.randomUUID(),
+    const o = db.orders.find(
+      x=>x.id===editingOrderId
+    );
 
-    name,
+    if(!o){
+      alert("Comanda nu mai există.");
+      editingOrderId=null;
+      closeModal();
+      render();
+      return;
+    }
 
-    phone,
+    o.name = name;
+    o.phone = phone;
+    o.seriesId = sid;
+    o.series = sr.name;
+    o.pickup = pick;
+    o.qty = qty;
 
-    seriesId:sid,
+  }else{
 
-    series:sr.name,
+    const o={
 
-    pickup:pick,
+      id:crypto.randomUUID(),
 
-    qty,
+      name,
 
-    status:"Comandă"
+      phone,
 
-  };
+      seriesId:sid,
+
+      series:sr.name,
+
+      pickup:pick,
+
+      qty,
+
+      status:"Comandă"
+
+    };
 
 
-  db.orders.push(o);
+    db.orders.push(o);
+  }
+
+
+  editingOrderId=null;
 
   save();
 
@@ -1884,6 +2015,41 @@ function addOrder(){
 
   render();
 
+}
+
+
+function editOrder(id){
+
+  const o = db.orders.find(
+    x=>x.id===id
+  );
+
+  if(!o)return;
+
+  openOrder(id);
+}
+
+
+function getSeriesAvailableForOrder(sr,species,excludeId=null){
+
+  const stock =
+    +sr.stock[species] || 0;
+
+  const sold = db.orders.reduce((total,o)=>{
+
+    if(
+      o.seriesId===sr.id &&
+      o.status!=="Anulată" &&
+      o.id!==excludeId
+    ){
+      return total + (+((o.qty||{})[species]) || 0);
+    }
+
+    return total;
+
+  },0);
+
+  return Math.max(0,stock-sold);
 }
 
 
@@ -2584,14 +2750,6 @@ setInterval(
 );
 
 </script>
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./service-worker.js")
-        .then(() => console.log("Service Worker activ"))
-        .catch(error => console.error("Service Worker error:", error));
-    });
-  }
-</script>
+
 </body>
 </html>
