@@ -1706,9 +1706,9 @@ db.orders.filter(o=>
   &&
 
   (!statusFilter ||
-    (statusFilter==="ridicate" && o.status==="Ridicată") ||
-    (statusFilter==="neridicate" && o.status!=="Ridicată")
-  )
+  (statusFilter==="picked" && o.status==="Ridicată") ||
+  (statusFilter==="pending" && o.status!=="Ridicată")
+)
 
   &&
 
