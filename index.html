@@ -2201,14 +2201,14 @@ function addOrder(){
     ).value;
 
 
-  if(!name || !phone || !pick){
+ if(!name || !pick){
 
-    alert(
-      "Completează numele, telefonul și data."
-    );
+  alert(
+    "Completează numele și data."
+  );
 
-    return;
-  }
+  return;
+}
 
 
   const sr =
@@ -2333,6 +2333,14 @@ function editOrder(id){
   );
 
   if(!o)return;
+  if(!o.phone){
+
+  alert(
+    "Clientul nu are număr de telefon."
+  );
+
+  return;
+}
 
   openOrder(id);
 }
