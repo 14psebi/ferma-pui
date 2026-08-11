@@ -1947,14 +1947,19 @@ db.species
 
   db.species.forEach(s=>{
 
-    document
-    .getElementById("q_"+s)
-    .addEventListener(
+  const input =
+    document.getElementById("q_"+s);
+
+  if(input){
+
+    input.addEventListener(
       "input",
       updateAvailable
     );
 
-  });
+  }
+
+});
 
 
   syncPickup();
