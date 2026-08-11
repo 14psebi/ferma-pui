@@ -527,6 +527,15 @@ class="search"
 >
 <option value="">Toate seriile</option>
 </select>
+  <select
+  id="orderStatusFilter"
+  onchange="renderOrders()"
+  class="search"
+>
+  <option value="">Toate comenzile</option>
+  <option value="pending">Neridicate</option>
+  <option value="picked">Ridicate</option>
+</select>
 
 </div>
 
@@ -1684,21 +1693,30 @@ function renderOrders(){
     ).toLowerCase();
 
 
-  const f=sel.value;
+ const f=sel.value;
 
+const statusFilter =
+  document.getElementById("orderStatusFilter")?.value || "";
 
-  const arr =
-    db.orders.filter(o=>
+const arr =
+db.orders.filter(o=>
 
-      (!f || o.seriesId===f)
+  (!f || o.seriesId===f)
 
-      &&
+  &&
 
-      (`${o.name} ${o.phone}`
-        .toLowerCase()
-        .includes(q))
+  (!statusFilter ||
+    (statusFilter==="ridicate" && o.status==="Ridicată") ||
+    (statusFilter==="neridicate" && o.status!=="Ridicată")
+  )
 
-    );
+  &&
+
+  (`${o.name} ${o.phone}`
+    .toLowerCase()
+    .includes(q))
+
+);
 
 
   document.getElementById(
