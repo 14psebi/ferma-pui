@@ -1795,31 +1795,41 @@ function openOrder(editId=null){
   editingOrderId = existing ? existing.id : null;
 
 
-  const fields =
-    db.species.map(s=>`
+  const selectedSeriesId = existing
+  ? existing.seriesId
+  : db.series[0].id;
 
-      <div class="field">
+const selectedSeries = db.series.find(
+  s => s.id === selectedSeriesId
+);
 
-        <label>
-          ${esc(s)}
-        </label>
+const fields =
+db.species
+  .filter(s => (+selectedSeries.stock[s] || 0) > 0)
+  .map(s => `
 
-        <input
-          type="number"
-          min="0"
-          id="q_${esc(s)}"
-          value=" "
-        >
+  <div class="field">
 
-        <div
-          id="available_${esc(s)}"
-          class="muted"
-          style="margin-top:4px"
-        ></div>
+    <label>
+      ${esc(s)}
+    </label>
 
-      </div>
+    <input
+      type="number"
+      min="0"
+      id="q_${esc(s)}"
+      value=" "
+    >
 
-    `).join("");
+    <div
+      id="available_${esc(s)}"
+      class="muted"
+      style="margin-top:4px"
+    ></div>
+
+  </div>
+
+`).join("");
 
 
   show(`
@@ -1857,7 +1867,7 @@ function openOrder(editId=null){
 
         <select
           id="o_series"
-          onchange="syncPickup();updateAvailable()"
+          onchange="changeOrderSeries()"
         >
 
           ${
@@ -2052,7 +2062,82 @@ function updateAvailable(){
   }
 
 }
+function changeOrderSeries(){
 
+  const select =
+    document.getElementById("o_series");
+
+  if(!select)return;
+
+  const sid = select.value;
+
+  const sr =
+    db.series.find(x => x.id === sid);
+
+  if(!sr)return;
+
+  // Actualizăm data ridicării
+  syncPickup();
+
+  // Refacem lista speciilor pentru seria aleasă
+  const speciesContainer =
+    document.querySelector(".species");
+
+  if(!speciesContainer)return;
+
+  speciesContainer.innerHTML =
+    db.species
+      .filter(s => {
+        const stock =
+          +sr.stock[s] || 0;
+
+        return stock > 0;
+      })
+      .map(s => `
+
+        <div class="field">
+
+          <label>
+            ${esc(s)}
+          </label>
+
+          <input
+            type="number"
+            min="0"
+            id="q_${esc(s)}"
+            value=" "
+          >
+
+          <div
+            id="available_${esc(s)}"
+            class="muted"
+            style="margin-top:4px"
+          ></div>
+
+        </div>
+
+      `)
+      .join("");
+
+  // Punem din nou verificarea pe cantități
+  db.species.forEach(s => {
+
+    const input =
+      document.getElementById("q_" + s);
+
+    if(input){
+
+      input.addEventListener(
+        "input",
+        updateAvailable
+      );
+
+    }
+
+  });
+
+  updateAvailable();
+}
 
 /* =========================================================
    DATA RIDICARII
