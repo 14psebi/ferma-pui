@@ -2225,12 +2225,17 @@ function addOrder(){
   let invalid=false;
 
 
-  db.species.forEach(s=>{
+ db.species.forEach(s=>{
 
-    qty[s]=
-      +document.getElementById(
-        "q_"+s
-      ).value || 0;
+  const input =
+    document.getElementById(
+      "q_"+s
+    );
+
+  qty[s] =
+    input
+      ? (+input.value || 0)
+      : 0;
 
 
     const available =
